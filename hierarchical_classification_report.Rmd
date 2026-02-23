@@ -1,0 +1,237 @@
+---
+title: "AIML WP 10 - Textclassification Cluster 3: Hierarchical Text Modelling"
+output: 
+  html_document:
+    fig_caption: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r,setup,echo=FALSE,message=FALSE}
+library(ggplot2)
+library(data.table)
+library(openxlsx)
+```
+
+# Introduction
+
+Standardized code systems, such as NACE, ISCO, or COICOP, are often
+designed in a hierarchical manner, meaning they can be organized in a
+tree-like structure, with parent and child nodes. This allows for
+analysis on different levels of details. These hierarchies can
+potentially be exploited for the classifcation of text into such code
+systems.
+
+Some attempts have been made to integrate the hierarchical structures
+into the modelling process. A review of the existing literature can be
+found here:
+<https://github.com/AIML4OS/WP10/blob/main/LiteratureReviews/literature_review_hierarchical_models.pdf>
+
+Althoug a fair amount of research has been conducted on the topic, the
+resulting hierarchical models do not seem to increase performances
+significantly.
+
+As part of the AIML4OS project, WP 10 "Text classification" - Cluster 3,
+we developed our own hierarchical text classification models. This
+report includes a description of the introduced methods, evaluation and
+comparisons, as well as conclusions on the topic of hierarchical text
+classification.
+
+# Methods
+
+We compare three different hierarchical approaches to flat
+classification. The three hierarchical approaches are:
+
+-   Stacked Model
+-   Multiple Outputs
+-   Hierarchical Loss
+
+These models are trained and evaluated for NACE classification. We use a
+subset of our available data to reduce training times. A test set of 400
+instances is used to evaluate the models. The input texts of the test
+data is excluded from the training data, meaning that the test data does
+not contain any text used during training. In the case of NACE, we split
+the codes into three hierarchical levels: the first and second digit, the
+third and fourth digit, and the fifth, the last, digit. We disregard the
+letter as the very first item of the NACE codes for the classification
+process, as these are unique in combination with the first two digits.
+
+For implementing our models, we use R (version 4.4.3) with keras^[https://keras.io/] and
+tensorflow^[https://tensorflow.rstudio.com/], accessed through reticulate ^[https://cran.r-project.org/web/packages/reticulate/index.html].
+
+## Stacked Model
+
+The idea of the stacked model is training one model per class
+level, resulting in three models. Supplementary to the input of the
+first model (input text as token sequence and as one hot encoded
+matrices), the second and third model are fed the probabilities for each
+class derived from the previous model. The input to the second and third
+model will therefore include the 85 and 86 predicted probabilities from
+the first and second model respectively (85 different classes for the
+first level, 86 for the second). By using multiple models to generate
+one output code, we introduce the problem of generating invalid codes,
+if we define the most likely code as the combination of all three most
+likely level-codes(one code per model). To overcome this issue, we filter out all
+invalid code combinations and only look at valid 5-digit codes. A more
+in detail explanation is given in section [Top-k Codes for Models with
+Outputs per Level]. The figure below illustrates the model architecture.
+
+```{r, out.width='30%', fig.align='center', fig.cap='Stacked Model Architecture',include=T,echo=F}
+knitr::include_graphics('graphs/stacked_model_hier.png')
+```
+
+## Multiple Outputs
+
+The multiple output model receives the same input as the flat
+classifier, but will generate three outputs, one per hierarchy level (illustrated below). In contrast to the stacked model, this approach only consists of a single model.
+For each input, we hence get three output vectors, containing the class
+probabilities for each output level. All three of these outputs need to
+be concatenated into one valid output codes. This again, like for the
+stacked model, poses the problem of generating invalid codes.
+```{r, out.width='50%', fig.align='center', fig.cap='Multiple Outputs Model Architecture',include=T,echo=F}
+knitr::include_graphics('graphs/multiple_outputs_model_hier.png')
+```
+
+
+
+## Hierarchical Loss
+
+This model uses the same input, and produces the same output format as
+the flatt classifier. The difference is the alteration of the loss
+function. While we use the crossentropy for the flat classification,
+this model uses a hierarchical loss. The hierarchical loss is based on
+weighted distances, and designed to assign different penalties (or distances)
+for misclassifications during training. For a correct code, the penalty
+is zero. The further away the predicted code from the true code, the
+higher the penalty. These panalty values are set in a penalty matrix. During training,
+the loss function collects the penalties for each predicted instance and
+computes the hierarchical loss with it. 
+
+Let $k=\{1,..,n\}$ denote all
+possible classes, our custom hierarchical loss is then defined as,
+$$loss=\sum_kp(k)*d(true,k),$$ where $p(k)$ is the probability for class
+$k$, and $d(true,k)$ is the penalty for class k given the true class,
+according to the penalty matrix. This way, during training, the model will
+learn to favor classes that are closer in distance to the true class to avoid high penalties. We find that using only this custom loss leads to a decrease in peformance, which is why we use the crossentropy
+in combination with our hiearchical loss function. The final loss
+function we use for the model is a weighted combination of the
+hierarchical loss and the standard cross-entropy loss. Specifically, 70%
+of the total loss comes from the hierarchical penalty term and 30% from
+the cross-entropy term. Formally, this is
+$$Loss=0.7*L_{hier}+0.3*L_{ce}.$$
+
+
+## Top-k Codes for Models with Outputs per Level
+
+As mentioned in sections [Stacked Model] and [Multiple Outputs], having
+a model that produces codes for each level (level-codes) introduces two
+problems: 1) the possibility of generating invalid codes, and 2) the
+challenge of identifying top-k most probable codes. Our proposed
+solution follows the below steps:
+
+1.  For each level, identify the codes that have a probablity higher
+    than $\frac{1}{\# Codes}$, i.e. the codes with higher probability
+    than random guessing. For example, in the case of NACE, for the
+    third level (5th digit), there are six possible digits. In that
+    case, we only select the codes with probablity $\frac{1}{6}$ or
+    higher.
+2.  For the remaining codes of all levels, we multiply the probabilities
+    for all code combinations and concatenate the respective level-codes
+    to a 5-digit NACE code.
+3.  Remove the invalid codes resulting from step 2 from the list of
+    possible candidates.
+4.  Sort the remaining codes by the computed product of probabilities in
+    descending order.
+5.  Only keep the top-k codes from the resulting list.
+
+Note that excluding level-codes with probablities lower than random
+guessing, and removing invalid codes, introduces the possibility of the
+list of most probable codes containing less than k codes. In that case,
+we use the entire list of most probable codes generated by the steps
+described above. A maximum of k codes can always be computed.
+
+# Evaluation and Comparison
+
+We evaluate all models using accuracy, top-3 accuracy, top-5 accuracy,
+top-10 accuracy, and weighted hierarchical accuracy. The hierarchical
+accuracy takes the hierarchy into account, by counting how the number of levels are predicted correctly up to the first incorrect level. If
+the first predicted level matches the first true code for the first
+level, we count 1/3. If both the first and the second level match, we
+count 2/3. If the entire code is predicted, the hierarchical accuracy
+will be assigned 1. Note that unless the first level-code is correct, we
+always count 0. For a predicted code where the second and third level
+are predicted correctly, but the first is not, we will assign 0 to the
+prediction. The hierarchical accuracy is then computed by the mean of
+assigned values for all outpus codes.
+
+The table below shows the performances of the three hierarchical models
+and the flat classifier. The figure displays the same results for easier
+comparison. We find that only one of the hierarchical models, the
+hierachical loss model, achieves higher scores than the flat model.
+However, this increase in performance is only minimal. The stacked and
+the multiple output model rank lower in performance than the flat model.
+This could be attributed to the implemented solution of finding the most
+probable codes. Altering this process might lead to better predictions.
+
+```{r tab:restable,echo=FALSE,message=FALSE}
+flat <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/flat_class.xlsx"))
+hloss <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/hierarchical_loss.xlsx"))
+stacked <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/stacked_class.xlsx"))
+mouts <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/multiple_outs.xlsx"))
+
+res <- do.call(rbind,list(flat,hloss,stacked,mouts))
+setDT(res)
+
+res[metric=="accuarcy",metric:="accuracy"]
+res_wide <- dcast(res,type ~ metric,  value.var = "value")
+names(res_wide) <- c("Model","Accuracy","Hierarchical Accuracy","Top-10 Acc.","Top-3 Acc.","Top-5 Acc.")
+res_wide <- res_wide[,.(Model,Accuracy,`Hierarchical Accuracy`,`Top-3 Acc.`,`Top-5 Acc.`,`Top-10 Acc.`)]
+res_wide <- res_wide[,c("Accuracy","Hierarchical Accuracy","Top-10 Acc.","Top-3 Acc.","Top-5 Acc."):=round(.SD,4),.SDcols=c("Accuracy","Hierarchical Accuracy","Top-10 Acc.","Top-3 Acc.","Top-5 Acc.")]
+
+knitr::kable(res_wide, caption="Comparison of Model Performances\\label{restable}")
+```
+
+```{r,echo=FALSE,message=FALSE,fig.align='center'}
+res[,metric:=factor(metric,levels=c("accuracy","hier_accuracy","top3_accuracy","top5_accuracy","top10_accuracy"))]
+
+ggplot(res)+
+  geom_bar(aes(x=metric,y=value,fill = type),stat="identity",position="dodge")+
+  labs(title="Comparison of model performance",x="",y="")+
+  scale_fill_brewer(palette="Set2", name = "Model", 
+                    labels = c("Flat","Hierarchical Loss", "Multiple Outputs","Stacked")
+                    )+
+  scale_x_discrete(labels=c("Accuracy", "hierarchical Acc.", "Top-3 Acc.","Top-5 Acc.","Top-10 Acc."))+
+  theme_minimal()
+```
+
+The figure below hightlights the differences in performance between our implemented
+hiearchy-aware models and the flat model.
+
+```{r,echo=FALSE,message=FALSE,fig.align='center'}
+diff <- res[, diff_to_flat := value - value[type == "flat"], by = metric]
+ggplot(diff[type!="flat",])+
+  geom_bar(aes(x=metric,y=diff_to_flat,fill=type),position="dodge",stat="identity")+
+  labs(title="Performance differences to flat Model",x="",y="difference")+
+  scale_fill_brewer(palette="Set2", name = "Model", 
+                    labels = c("Hierarchical Loss", "Multiple Outputs","Stacked")
+                    )+
+  scale_x_discrete(labels=c("Accuracy", "hierarchical Acc.", "Top-3 Acc.","Top-5 Acc.","Top-10 Acc."))+
+  geom_hline(yintercept = 0,color="black",linetype="dashed")+
+  theme_minimal()
+```
+
+# Conclusion
+
+Like previous research suggests, incorporating the hierarchical
+structures of a code system into the modelling process can lead to some,
+although often small, increase in performance. This opens up a
+discussion about the trade-off of performance and resources needed to
+implement such models. These types of hierarchical models are often
+larger, or consist of multiple sub-models, which also leads to higher
+runtimes and increased need for computational resources. Code
+implementations for model components — such as the custom hierarchical
+loss introduced in [Hierarchical Loss] or other hierarchy-aware
+architectures — are rarely available as open source implementations. When they do exist, they are
+often not ready to use out of the box and require substantial
+adaptation.

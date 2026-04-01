@@ -1,0 +1,2 @@
+acc,top_10_acc,maxlen,ngram,num_heads,num_trans_blocks,hidden_layer_dim,dropout1,dropout2,embed_dim,dense_dim,model_suffix
+0.810281813144684,0.965814173221588,50,3/5,6,1,256,0.3,0.3,64,64,stacked_num

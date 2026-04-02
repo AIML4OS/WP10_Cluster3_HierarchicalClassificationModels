@@ -198,15 +198,15 @@ ggplot(res)+
   theme_minimal()
 ```
 
-The figure below hightlights the differences in performance between our implemented
-hiearchy-aware models and the flat model.
+The figure below highlights the differences in performance between our implemented
+hierarchy-aware models and the flat model.
 
 ```{r,echo=FALSE,message=FALSE,fig.align='center'}
 diff <- res[, diff_to_flat := value - value[type == "flat"], by = metric]
 ggplot(diff[type!="flat",])+
   geom_bar(aes(x=metric,y=diff_to_flat,fill=type),position="dodge",stat="identity")+
   labs(title="Performance differences to flat Model",x="",y="difference")+
-  scale_fill_brewer(palette="Set2", name = "Model", 
+  scale_fill_brewer(palette="Set2", name = "Model",
                     labels = c("Hierarchical Loss", "Multiple Outputs","Stacked")
                     )+
   scale_x_discrete(labels=c("Accuracy", "hierarchical Acc.", "Top-3 Acc.","Top-5 Acc.","Top-10 Acc."))+
@@ -222,7 +222,7 @@ although often small, increase in performance. This opens up a
 discussion about the trade-off of performance and resources needed to
 implement such models. These types of hierarchical models are often
 larger, or consist of multiple sub-models, which also leads to higher
-runtimes and increased need for computational resources. Code
+run times and increased need for computational resources. Code
 implementations for model components — such as the custom hierarchical
 loss introduced in [Hierarchical Loss] or other hierarchy-aware
 architectures — are rarely available as open source implementations. When they do exist, they are

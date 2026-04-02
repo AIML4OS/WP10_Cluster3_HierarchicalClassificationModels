@@ -1,45 +1,45 @@
 # Runnable examples for hierarchical models
 
 ```{r,eval=FALSE}
-# load helper functions
-source("R/helpers.R")
-# load NACE dictionary as toy data set
-source("R/load_data_NACE.R")
-# load function(s) for hierarchical evaluation
-source("R/eval.R")
-# model definitions
-source("R/helper_transformer.R")
-
-# define target variable to classify
-target <- "Code"
-
-# clean data and split into train/test/valid set
-source("R/train_test_dat.R")
-
-
-# Flat Model --------------------------------------------------------------
-source("R/flat_model.R")
-result_flat
-
-
-# Stacked Model -----------------------------------------------------------
-source("R/stacked_model.R")
-res_stacked 
-
-# Multiple Outputs Model --------------------------------------------------
-source("R/multiple_outputs_model.R")
-result_multiple_outs
-
-# Hierarchical Loss -------------------------------------------------------
-source("hierarchical_loss_model.R")
-result_hier_loss
+# # load helper functions
+# source("R/helpers.R")
+# # load NACE dictionary as toy data set
+# source("R/load_data_NACE.R")
+# # load function(s) for hierarchical evaluation
+# source("R/eval.R")
+# # model definitions
+# source("R/helper_transformer.R")
+# 
+# # define target variable to classify
+# target <- "Code"
+# 
+# # clean data and split into train/test/valid set
+# source("R/train_test_dat.R")
+# 
+# 
+# # Flat Model --------------------------------------------------------------
+# source("R/flat_model.R")
+# result_flat
+# 
+# 
+# # Stacked Model -----------------------------------------------------------
+# source("R/stacked_model.R")
+# res_stacked 
+# 
+# # Multiple Outputs Model --------------------------------------------------
+# source("R/multiple_outputs_model.R")
+# result_multiple_outs
+# 
+# # Hierarchical Loss -------------------------------------------------------
+# source("hierarchical_loss_model.R")
+# result_hier_loss
 ```
 
 
 ```{r,eval=F}
-rbind(result_flat,
-      res_stacked,
-      result_multiple_out,
-      result_hier_loss)
+# rbind(result_flat,
+#       res_stacked,
+#       result_multiple_out,
+#       result_hier_loss)
 ```
 

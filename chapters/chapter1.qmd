@@ -1,12 +1,5 @@
----
-title: "AIML WP 10 - Textclassification Cluster 3: Hierarchical Text Modelling"
-output: 
-  html_document:
-    fig_caption: true
-editor_options: 
-  markdown: 
-    wrap: 72
----
+# Cluser 3 Report: Hierarchical textclassification
+## From Text to Code (AIML WP10)
 
 ```{r,setup,echo=FALSE,message=FALSE}
 library(ggplot2)
@@ -20,7 +13,7 @@ Standardized code systems, such as NACE, ISCO, or COICOP, are often
 designed in a hierarchical manner, meaning they can be organized in a
 tree-like structure, with parent and child nodes. This allows for
 analysis on different levels of details. These hierarchies can
-potentially be exploited for the classifcation of text into such code
+potentially be exploited for the classification of text into such code
 systems.
 
 Some attempts have been made to integrate the hierarchical structures
@@ -28,7 +21,7 @@ into the modelling process. A review of the existing literature can be
 found here:
 <https://github.com/AIML4OS/WP10/blob/main/LiteratureReviews/literature_review_hierarchical_models.pdf>
 
-Althoug a fair amount of research has been conducted on the topic, the
+Although a fair amount of research has been conducted on the topic, the
 resulting hierarchical models do not seem to increase performances
 significantly.
 
@@ -78,7 +71,7 @@ in detail explanation is given in section [Top-k Codes for Models with
 Outputs per Level]. The figure below illustrates the model architecture.
 
 ```{r, out.width='30%', fig.align='center', fig.cap='Stacked Model Architecture',include=T,echo=F}
-knitr::include_graphics('graphs/stacked_model_hier.png')
+knitr::include_graphics('images/stacked_model_hier.png')
 ```
 
 ## Multiple Outputs
@@ -90,7 +83,7 @@ probabilities for each output level. All three of these outputs need to
 be concatenated into one valid output codes. This again, like for the
 stacked model, poses the problem of generating invalid codes.
 ```{r, out.width='50%', fig.align='center', fig.cap='Multiple Outputs Model Architecture',include=T,echo=F}
-knitr::include_graphics('graphs/multiple_outputs_model_hier.png')
+knitr::include_graphics('images/multiple_outputs_model_hier.png')
 ```
 
 
@@ -98,8 +91,8 @@ knitr::include_graphics('graphs/multiple_outputs_model_hier.png')
 ## Hierarchical Loss
 
 This model uses the same input, and produces the same output format as
-the flatt classifier. The difference is the alteration of the loss
-function. While we use the crossentropy for the flat classification,
+the flat classifier. The difference is the alteration of the loss
+function. While we use the cross entropy for the flat classification,
 this model uses a hierarchical loss. The hierarchical loss is based on
 weighted distances, and designed to assign different penalties (or distances)
 for misclassifications during training. For a correct code, the penalty
@@ -113,8 +106,8 @@ possible classes, our custom hierarchical loss is then defined as,
 $$loss=\sum_kp(k)*d(true,k),$$ where $p(k)$ is the probability for class
 $k$, and $d(true,k)$ is the penalty for class k given the true class,
 according to the penalty matrix. This way, during training, the model will
-learn to favor classes that are closer in distance to the true class to avoid high penalties. We find that using only this custom loss leads to a decrease in peformance, which is why we use the crossentropy
-in combination with our hiearchical loss function. The final loss
+learn to favor classes that are closer in distance to the true class to avoid high penalties. We find that using only this custom loss leads to a decrease in performance, which is why we use the cross entropy
+in combination with our hierarchical loss function. The final loss
 function we use for the model is a weighted combination of the
 hierarchical loss and the standard cross-entropy loss. Specifically, 70%
 of the total loss comes from the hierarchical penalty term and 30% from
@@ -130,11 +123,11 @@ problems: 1) the possibility of generating invalid codes, and 2) the
 challenge of identifying top-k most probable codes. Our proposed
 solution follows the below steps:
 
-1.  For each level, identify the codes that have a probablity higher
+1.  For each level, identify the codes that have a probability higher
     than $\frac{1}{\# Codes}$, i.e. the codes with higher probability
     than random guessing. For example, in the case of NACE, for the
     third level (5th digit), there are six possible digits. In that
-    case, we only select the codes with probablity $\frac{1}{6}$ or
+    case, we only select the codes with probability $\frac{1}{6}$ or
     higher.
 2.  For the remaining codes of all levels, we multiply the probabilities
     for all code combinations and concatenate the respective level-codes
@@ -145,7 +138,7 @@ solution follows the below steps:
     descending order.
 5.  Only keep the top-k codes from the resulting list.
 
-Note that excluding level-codes with probablities lower than random
+Note that excluding level-codes with probabilities lower than random
 guessing, and removing invalid codes, introduces the possibility of the
 list of most probable codes containing less than k codes. In that case,
 we use the entire list of most probable codes generated by the steps
@@ -163,22 +156,22 @@ will be assigned 1. Note that unless the first level-code is correct, we
 always count 0. For a predicted code where the second and third level
 are predicted correctly, but the first is not, we will assign 0 to the
 prediction. The hierarchical accuracy is then computed by the mean of
-assigned values for all outpus codes.
+assigned values for all outputs codes.
 
 The table below shows the performances of the three hierarchical models
 and the flat classifier. The figure displays the same results for easier
 comparison. We find that only one of the hierarchical models, the
-hierachical loss model, achieves higher scores than the flat model.
+hierarchical loss model, achieves higher scores than the flat model.
 However, this increase in performance is only minimal. The stacked and
 the multiple output model rank lower in performance than the flat model.
 This could be attributed to the implemented solution of finding the most
 probable codes. Altering this process might lead to better predictions.
 
 ```{r tab:restable,echo=FALSE,message=FALSE}
-flat <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/flat_class.xlsx"))
-hloss <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/hierarchical_loss.xlsx"))
-stacked <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/stacked_class.xlsx"))
-mouts <- openxlsx::read.xlsx(usethis::proj_path("hierarchical_modelling/results/multiple_outs.xlsx"))
+flat <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/flat_class.xlsx"))
+hloss <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/hierarchical_loss.xlsx"))
+stacked <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/stacked_class.xlsx"))
+mouts <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/multiple_outs.xlsx"))
 
 res <- do.call(rbind,list(flat,hloss,stacked,mouts))
 setDT(res)
@@ -235,3 +228,4 @@ loss introduced in [Hierarchical Loss] or other hierarchy-aware
 architectures — are rarely available as open source implementations. When they do exist, they are
 often not ready to use out of the box and require substantial
 adaptation.
+

@@ -24,7 +24,7 @@ website:
       - href: index.qmd
         text: Introduction
       - href: chapters/chapter1.qmd
-        text: Plot with ggplot2
+        text: Report
 
 format:
   html:

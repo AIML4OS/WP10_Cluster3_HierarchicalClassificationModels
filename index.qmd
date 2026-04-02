@@ -1,5 +1,5 @@
 ---
-title: "Template for WP6 training material" # See below for multilingual resource
+title: "Hierarchical Textclassification - Report and Code repository" 
 include-before-body:
   - text: <img src="resources/cover/main2.png" style="max-width:900px;width:100%">
 author:
@@ -12,8 +12,7 @@ author:
   - name: Johan Andresen
     url: https://github.com/publicstatistician2
     email: Public.Statistician2@statistics.org
-date: "2025-05-16"
-doi: "10.1000/182"  # Optional
+date: "2026-04-02"
 license: "CC-BY 4.0"  # Optional
 
 # If resources is multilingual, adopt that structure
@@ -23,7 +22,7 @@ license: "CC-BY 4.0"  # Optional
 # title-fr: "Bonjour SSPCloud"
 
 description: |
-    This is designed to serve as a report and tutorial on how to implement hierarchical structures into textclassification models, and summarize our findings. The respective github repository can be found [`here`](https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/tree/r_template).
+    These pages are designed to serve as a report and tutorial on how to implement hierarchical structures into textclassification models, and summarize our findings. The respective github repository can be found [`here`](https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/tree/r_template).
 
 # If resources is multilingual, adopt that structure
 # (need to have both description and description-* fields)
@@ -37,8 +36,8 @@ description: |
   #   Les résumés des ressources sont intégrés sous forme de métadonnées, utiles pour les portails de formation ou le partage sur les réseaux sociaux.
 
 tags:
-  - Starter Pack
-  - SSPCloud Documentation
+  - Hierarchical Classification
+  - Text Classification
 
 image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY-OenRMvFyZUfDm_snUCxpV4SyaHvUeqObA&s"
 
@@ -91,16 +90,5 @@ suggestedRequirements:
 # Optional: Statistical process classification
 gsbpm: "5.1" # See complete taxonomy: https://www.unescap.org/sites/default/d8files/event-documents/GSBPM_v5.1_R_for_SBP_8-18Apr2024.pdf
 ---
-
-
-# What is this template?
-
-This template is a Quarto Website customized for the AIML4OS project, designed to be used with {{< fa brands r-project >}}.
-
-# How to use it?
-
-See [this tutorial](https://aiml4os.github.io/training-material-starting-pack/).
-
-
 
 

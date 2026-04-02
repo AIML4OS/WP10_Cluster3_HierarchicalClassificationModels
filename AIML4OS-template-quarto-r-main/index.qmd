@@ -3,10 +3,13 @@ title: "Template for WP6 training material" # See below for multilingual resourc
 include-before-body:
   - text: <img src="resources/cover/main2.png" style="max-width:900px;width:100%">
 author:
-  - name: Public Statistician 1
-    url: https://github.com/publicstatistician1
-    email: Public.Statistician1@statistics.org
-  - name: Public Statistician 2
+  - name: Nina Niederhametner
+    url: https://github.com/ninanhm
+    email: nina.niederhametner@statistik.gv.at
+  - name: Johannes Gussenbauer
+    url: https://github.com/publicstatistician2
+    email: Public.Statistician2@statistics.org
+  - name: Johan Andresen
     url: https://github.com/publicstatistician2
     email: Public.Statistician2@statistics.org
 date: "2025-05-16"
@@ -20,7 +23,7 @@ license: "CC-BY 4.0"  # Optional
 # title-fr: "Bonjour SSPCloud"
 
 description: |
-    This template is a fast starting pack for AIML4OS projects that use `R`. For `Python` projects, see [this `Github` repository](https://github.com/InseeFrLab/AIML4OS-template-quarto-python).
+    This is designed to serve as a report and tutorial on how to implement hierarchical structures into textclassification models, and summarize our findings. The respective github repository can be found [`here`](https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/tree/r_template).
 
 # If resources is multilingual, adopt that structure
 # (need to have both description and description-* fields)

@@ -53,6 +53,6 @@ rsconnect/
 /.quarto/
 
 data/*
-**/data/*
+
 
 **/*.quarto_ipynb

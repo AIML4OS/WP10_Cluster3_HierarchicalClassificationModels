@@ -1,45 +1,88 @@
 # Runnable examples for hierarchical models
 
-```{r,eval=FALSE}
-# # load helper functions
-# source("R/helpers.R")
-# # load NACE dictionary as toy data set
-# source("R/load_data_NACE.R")
-# # load function(s) for hierarchical evaluation
-# source("R/eval.R")
-# # model definitions
-# source("R/helper_transformer.R")
-# 
-# # define target variable to classify
-# target <- "Code"
-# 
-# # clean data and split into train/test/valid set
-# source("R/train_test_dat.R")
-# 
-# 
-# # Flat Model --------------------------------------------------------------
-# source("R/flat_model.R")
-# result_flat
-# 
-# 
-# # Stacked Model -----------------------------------------------------------
-# source("R/stacked_model.R")
-# res_stacked 
-# 
-# # Multiple Outputs Model --------------------------------------------------
-# source("R/multiple_outputs_model.R")
-# result_multiple_outs
-# 
-# # Hierarchical Loss -------------------------------------------------------
-# source("hierarchical_loss_model.R")
-# result_hier_loss
+```{r setup, include=FALSE}
+#knitr::opts_knit$set(root.dir = "exercises")
+knitr::opts_chunk$set(message = FALSE)
 ```
 
 
-```{r,eval=F}
-# rbind(result_flat,
-#       res_stacked,
-#       result_multiple_out,
-#       result_hier_loss)
+This file will train all four implemented models on a toy data set and shows their results. In case you do not want to train the models (this can take a few hours), you can set the parameter `run==F`, this will only load and print the results. `run==TRUE` will train each of the four models and save/print the results.
+Note that since the "training data" here is only the dictionary provided by Statistics Austria, the performance is fairly decreased when compared to "real" training data.
+```{r param run}
+run <- F
+```
+
+First we set up the data. For this, we download the NACE dictionary from the Statistics Austria classification data base: https://www.statistik.at/KDBWeb/kdb_VersionAuswahl.do.
+```{r data, message=FALSE}
+if(run){
+  # load helper functions
+  source("R/helpers.R")
+  # load NACE dictionary as toy data set
+  source("R/load_data_NACE.R")
+  # load function(s) for hierarchical evaluation
+  source("R/eval.R")
+  # model definitions
+  source("R/helper_transformer.R")
+  
+  # define target variable to classify
+  target <- "Code"
+  
+  # clean data and split into train/test/valid set
+  source("R/train_test_dat.R") 
+}
+```
+
+
+```{r flat}
+# Flat Model --------------------------------------------------------------
+if(run){
+  source("R/flat_model.R")
+}else{
+  result_flat <- openxlsx::read.xlsx("results/flat_class.xlsx")
+}
+
+result_flat
+```
+
+
+```{r stacked}
+# Stacked Model -----------------------------------------------------------
+if(run){
+  source("R/stacked_model.R")
+}else{
+  res_stacked <- openxlsx::read.xlsx("results/stacked_class.xlsx")
+}
+res_stacked
+```
+
+
+```{r multipleouts}
+# Multiple Outputs Model --------------------------------------------------
+if(run){
+  source("R/multiple_outputs_model.R")
+}else{
+  result_multiple_outs <- openxlsx::read.xlsx("results/multiple_outs.xlsx")
+}
+result_multiple_outs
+```
+
+
+```{r hierloss}
+# Hierarchical Loss -------------------------------------------------------
+if(run){
+  source("hierarchical_loss_model.R")
+}else{
+  result_hier_loss <- openxlsx::read.xlsx("results/hierarchical_loss.xlsx")
+}
+result_hier_loss
+```
+
+## Compare all results
+
+```{r results}
+rbind(result_flat,
+      res_stacked,
+      result_multiple_outs,
+      result_hier_loss)
 ```
 

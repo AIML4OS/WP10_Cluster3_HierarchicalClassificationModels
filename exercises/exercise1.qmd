@@ -36,7 +36,8 @@ if(run){
 head(dat[,.(NACE25,Text)])
 ```
 
-
+## Flat Model
+The flat model is a global classifier, that ignores the hierarchical structure of the classification codes.
 ```{r flat}
 # Flat Model --------------------------------------------------------------
 if(run){
@@ -48,7 +49,8 @@ if(run){
 result_flat
 ```
 
-
+## Stacked Model
+The stacked model trains one model per hierarchy level, where each subsequent model uses both the original input and the predicted class probabilities from the previous level. To avoid invalid label combinations, predictions are restricted to valid codes by filtering out inconsistent combinations across levels.
 ```{r stacked}
 # Stacked Model -----------------------------------------------------------
 if(run){
@@ -59,7 +61,8 @@ if(run){
 res_stacked
 ```
 
-
+## Multiple Outputs Model
+The multiple output model uses a single model to predict class probabilities for each hierarchy level simultaneously, producing one output vector per level. These outputs must be combined into a valid code.
 ```{r multipleouts}
 # Multiple Outputs Model --------------------------------------------------
 if(run){
@@ -70,7 +73,8 @@ if(run){
 result_multiple_outs
 ```
 
-
+## Hierarchical Loss Model
+This model keeps the same input and output as a flat classifier but replaces the standard loss with a combination of cross-entropy and a hierarchical loss that penalizes predictions based on their distance from the true class. By weighting errors according to a penalty matrix, the model is encouraged to prefer predictions that are closer in the hierarchy, with the final loss combining 70% hierarchical loss and 30% cross-entropy.
 ```{r hierloss}
 # Hierarchical Loss -------------------------------------------------------
 if(run){

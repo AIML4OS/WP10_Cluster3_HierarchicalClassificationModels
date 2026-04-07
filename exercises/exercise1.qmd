@@ -13,12 +13,14 @@ run <- F
 ```
 
 First we set up the data. For this, we download the NACE dictionary from the Statistics Austria classification data base: https://www.statistik.at/KDBWeb/kdb_VersionAuswahl.do.
+This data is split into training, validation, and test data.
 ```{r data, message=FALSE}
+# load helper functions
+source("R/helpers.R")
+# load NACE dictionary as toy data set
+source("R/load_data_NACE.R")
+
 if(run){
-  # load helper functions
-  source("R/helpers.R")
-  # load NACE dictionary as toy data set
-  source("R/load_data_NACE.R")
   # load function(s) for hierarchical evaluation
   source("R/eval.R")
   # model definitions
@@ -30,6 +32,8 @@ if(run){
   # clean data and split into train/test/valid set
   source("R/train_test_dat.R") 
 }
+# head training data
+head(dat[,.(NACE25,Text)])
 ```
 
 

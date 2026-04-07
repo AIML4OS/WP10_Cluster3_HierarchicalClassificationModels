@@ -88,9 +88,11 @@ result_hier_loss
 ## Compare all results
 
 ```{r results}
-rbind(result_flat,
+res <- rbind(result_flat,
       res_stacked,
       result_multiple_outs,
       result_hier_loss)
+setDT(res)
+dcast(res,metric~type)
 ```
 

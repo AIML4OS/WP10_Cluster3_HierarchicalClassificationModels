@@ -111,16 +111,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># head training data</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat[,.(NACE25,Text)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      NACE25                                  Text
-      &lt;char&gt;                                &lt;char&gt;
-1: G 47.78-9                      Automaten o.n.B.
-2: C 32.50-0 Betten für die Medizin oder Chirurgie
-3: C 24.45-0                              Molybdän
-4: B 08.12-0                        Sandvermahlung
-5: G 46.18-0                   Mikroskope, optisch
-6: U 97.00-0                          Hauspersonal</code></pre>
+<pre><code>      NACE25                                                        Text
+      &lt;char&gt;                                                      &lt;char&gt;
+1: G 46.47-0                                                 Lattenroste
+2: A 02.20-0                                          Klangholzgewinnung
+3: C 27.31-0 Datenübertragungskabel aus optischen Fasern, konfektioniert
+4: C 25.93-0                Gestelle aus Draht (nicht: für Polstermöbel)
+5: C 31.00-0                                            Stühle für Läden
+6: C 29.31-0                                     Scheibenwischer für Kfz</code></pre>
 </div>
 </div>
+<section id="flat-model" class="level2">
+<h2 class="anchored" data-anchor-id="flat-model">Flat Model</h2>
+<p>The flat model is a global classifier, that ignores the hierarchical structure of the classification codes.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flat Model --------------------------------------------------------------</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(run){</span>
@@ -139,6 +142,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5  hier_accuracy 0.4128978 flat</code></pre>
 </div>
 </div>
+</section>
+<section id="stacked-model" class="level2">
+<h2 class="anchored" data-anchor-id="stacked-model">Stacked Model</h2>
+<p>The stacked model trains one model per hierarchy level, where each subsequent model uses both the original input and the predicted class probabilities from the previous level. To avoid invalid label combinations, predictions are restricted to valid codes by filtering out inconsistent combinations across levels.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stacked Model -----------------------------------------------------------</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(run){</span>
@@ -156,6 +163,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5  hier_accuracy 0.3768844 stacked</code></pre>
 </div>
 </div>
+</section>
+<section id="multiple-outputs-model" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-outputs-model">Multiple Outputs Model</h2>
+<p>The multiple output model uses a single model to predict class probabilities for each hierarchy level simultaneously, producing one output vector per level. These outputs must be combined into a valid code.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple Outputs Model --------------------------------------------------</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(run){</span>
@@ -173,6 +184,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5  hier_accuracy 0.3608333 multiple_outs</code></pre>
 </div>
 </div>
+</section>
+<section id="hierarchical-loss-model" class="level2">
+<h2 class="anchored" data-anchor-id="hierarchical-loss-model">Hierarchical Loss Model</h2>
+<p>This model keeps the same input and output as a flat classifier but replaces the standard loss with a combination of cross-entropy and a hierarchical loss that penalizes predictions based on their distance from the true class. By weighting errors according to a penalty matrix, the model is encouraged to prefer predictions that are closer in the hierarchy, with the final loss combining 70% hierarchical loss and 30% cross-entropy.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hierarchical Loss -------------------------------------------------------</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(run){</span>
@@ -190,35 +205,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5  hier_accuracy 0.4229481 hierarchical_loss</code></pre>
 </div>
 </div>
+</section>
 <section id="compare-all-results" class="level2">
 <h2 class="anchored" data-anchor-id="compare-all-results">Compare all results</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(result_flat,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">rbind</span>(result_flat,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      res_stacked,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      result_multiple_outs,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      result_hier_loss)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      result_hier_loss)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(res)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dcast</span>(res,metric<span class="sc">~</span>type)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           metric     value              type
-1        accuarcy 0.3467337              flat
-2   top3_accuracy 0.5201005              flat
-3   top5_accuracy 0.6030151              flat
-4  top10_accuracy 0.6783920              flat
-5   hier_accuracy 0.4128978              flat
-6        accuarcy 0.3090452           stacked
-7   top3_accuracy 0.4145729           stacked
-8   top5_accuracy 0.4447236           stacked
-9  top10_accuracy 0.4974874           stacked
-10  hier_accuracy 0.3768844           stacked
-11       accuarcy 0.2788945     multiple_outs
-12  top3_accuracy 0.4346734     multiple_outs
-13  top5_accuracy 0.4748744     multiple_outs
-14 top10_accuracy 0.5351759     multiple_outs
-15  hier_accuracy 0.3608333     multiple_outs
-16       accuarcy 0.3567839 hierarchical_loss
-17  top3_accuracy 0.5326633 hierarchical_loss
-18  top5_accuracy 0.6030151 hierarchical_loss
-19 top10_accuracy 0.6884422 hierarchical_loss
-20  hier_accuracy 0.4229481 hierarchical_loss</code></pre>
+<pre><code>Key: &lt;metric&gt;
+           metric      flat hierarchical_loss multiple_outs   stacked
+           &lt;char&gt;     &lt;num&gt;             &lt;num&gt;         &lt;num&gt;     &lt;num&gt;
+1:       accuarcy 0.3467337         0.3567839     0.2788945 0.3090452
+2:  hier_accuracy 0.4128978         0.4229481     0.3608333 0.3768844
+3: top10_accuracy 0.6783920         0.6884422     0.5351759 0.4974874
+4:  top3_accuracy 0.5201005         0.5326633     0.4346734 0.4145729
+5:  top5_accuracy 0.6030151         0.6030151     0.4748744 0.4447236</code></pre>
 </div>
 </div>
 </section>

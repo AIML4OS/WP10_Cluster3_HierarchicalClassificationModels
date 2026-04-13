@@ -22,7 +22,7 @@ license: "CC-BY 4.0"  # Optional
 # title-fr: "Bonjour SSPCloud"
 
 description: |
-    These pages are designed to serve as a report and tutorial on how to implement hierarchical structures into textclassification models, and summarize our findings. The respective github repository can be found [`here`](https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/tree/r_template).
+    These pages are designed to serve as a report and tutorial on how to implement hierarchical structures into textclassification models, and summarize our findings. The respective github repository can be found [`here`](https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels).
 
 # If resources is multilingual, adopt that structure
 # (need to have both description and description-* fields)

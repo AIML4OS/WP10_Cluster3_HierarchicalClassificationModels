@@ -71,7 +71,7 @@ in detail explanation is given in section [Top-k Codes for Models with
 Outputs per Level]. The figure below illustrates the model architecture.
 
 ```{r, out.width='30%', fig.align='center', fig.cap='Stacked Model Architecture',include=T,echo=F}
-knitr::include_graphics('../images/stacked_model_hier.png')
+knitr::include_graphics('images/stacked_model_hier.png')
 ```
 
 ## Multiple Outputs
@@ -83,7 +83,7 @@ probabilities for each output level. All three of these outputs need to
 be concatenated into one valid output codes. This again, like for the
 stacked model, poses the problem of generating invalid codes.
 ```{r, out.width='50%', fig.align='center', fig.cap='Multiple Outputs Model Architecture',include=T,echo=F}
-knitr::include_graphics('../images/multiple_outputs_model_hier.png')
+knitr::include_graphics('images/multiple_outputs_model_hier.png')
 ```
 
 

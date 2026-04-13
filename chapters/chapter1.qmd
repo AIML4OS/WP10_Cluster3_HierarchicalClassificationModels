@@ -5,6 +5,7 @@
 library(ggplot2)
 library(data.table)
 library(openxlsx)
+library(knitr)
 ```
 
 # Introduction
@@ -69,6 +70,7 @@ likely level-codes(one code per model). To overcome this issue, we filter out al
 invalid code combinations and only look at valid 5-digit codes. A more
 in detail explanation is given in section [Top-k Codes for Models with
 Outputs per Level]. The figure below illustrates the model architecture.
+![Stacked Model Architecture]('images/stacked_model_hier.png')
 
 ```{r, out.width='30%', fig.align='center', fig.cap='Stacked Model Architecture',include=T,echo=F}
 knitr::include_graphics('images/stacked_model_hier.png')

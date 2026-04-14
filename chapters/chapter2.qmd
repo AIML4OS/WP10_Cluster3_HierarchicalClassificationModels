@@ -24,7 +24,7 @@ third and fourth digit, and the fifth, the last, digit. We disregard the
 letter as the very first item of the NACE codes for the classification
 process, as these are unique in combination with the first two digits.
 
-For implementing our models, we use R (version 4.4.3) with keras^[https://keras.io/] and
+For implementing our models, we use R (version 4.4.3) with keras3^[https://keras.io/] and
 tensorflow^[https://tensorflow.rstudio.com/], accessed through reticulate ^[https://cran.r-project.org/web/packages/reticulate/index.html].
 
 ## Stacked Model
@@ -43,7 +43,6 @@ likely level-codes(one code per model). To overcome this issue, we filter out al
 invalid code combinations and only look at valid 5-digit codes. A more
 in detail explanation is given in section [Top-k Codes for Models with
 Outputs per Level]. The figure below illustrates the model architecture.
-![Stacked Model Architecture]('images/stacked_model_hier.png')
 
 ```{r, out.width='30%', fig.align='center', fig.cap='Stacked Model Architecture',include=T,echo=F}
 knitr::include_graphics('images/stacked_model_hier.png')

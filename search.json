@@ -1,62 +1,102 @@
 [
   {
-    "objectID": "chapters/chapter1.html#stacked-model",
-    "href": "chapters/chapter1.html#stacked-model",
-    "title": "Cluser 3 Report: Hierarchical textclassification",
-    "section": "Stacked Model",
-    "text": "Stacked Model\nThe idea of the stacked model is training one model per class level, resulting in three models. Supplementary to the input of the first model (input text as token sequence and as one hot encoded matrices), the second and third model are fed the probabilities for each class derived from the previous model. The input to the second and third model will therefore include the 85 and 86 predicted probabilities from the first and second model respectively (85 different classes for the first level, 86 for the second). By using multiple models to generate one output code, we introduce the problem of generating invalid codes, if we define the most likely code as the combination of all three most likely level-codes(one code per model). To overcome this issue, we filter out all invalid code combinations and only look at valid 5-digit codes. A more in detail explanation is given in section Top-k Codes for Models with Outputs per Level. The figure below illustrates the model architecture. \n\n\n\n\n\nStacked Model Architecture",
+    "objectID": "chapters/chapter4.html",
+    "href": "chapters/chapter4.html",
+    "title": "Conclusion",
+    "section": "",
+    "text": "Conclusion\nLike previous research suggests, incorporating the hierarchical structures of a code system into the modelling process can lead to some, although often small, increase in performance. This opens up a discussion about the trade-off of performance and resources needed to implement such models. These types of hierarchical models are often larger, or consist of multiple sub-models, which also leads to higher run times and increased need for computational resources. Code implementations for model components — such as the custom hierarchical loss introduced in [Hierarchical Loss] or other hierarchy-aware architectures — are rarely available as open source implementations. When they do exist, they are often not ready to use out of the box and require substantial adaptation.",
     "crumbs": [
-      "Report"
+      "Discussion"
     ]
   },
   {
-    "objectID": "chapters/chapter1.html#multiple-outputs",
-    "href": "chapters/chapter1.html#multiple-outputs",
-    "title": "Cluser 3 Report: Hierarchical textclassification",
-    "section": "Multiple Outputs",
-    "text": "Multiple Outputs\nThe multiple output model receives the same input as the flat classifier, but will generate three outputs, one per hierarchy level (illustrated below). In contrast to the stacked model, this approach only consists of a single model. For each input, we hence get three output vectors, containing the class probabilities for each output level. All three of these outputs need to be concatenated into one valid output codes. This again, like for the stacked model, poses the problem of generating invalid codes.\n\n\n\n\n\nMultiple Outputs Model Architecture",
+    "objectID": "chapters/chapter2.html",
+    "href": "chapters/chapter2.html",
+    "title": "Methods",
+    "section": "",
+    "text": "We compare three different hierarchical approaches to flat classification. The flat model ignores the hierarchy in the data, and is used as a benchmark for the other models. The three hierarchical approaches are:\n\nStacked Model\nMultiple Outputs\nHierarchical Loss\n\nThese models are trained and evaluated for NACE classification. We use a subset of our available data to reduce training times. A test set of 400 instances is used to evaluate the models. The input texts of the test data is excluded from the training data, meaning that the test data does not contain any text used during training. In the case of NACE, we split the codes into three hierarchical levels: the first and second digit, the third and fourth digit, and the fifth, the last, digit. We disregard the letter as the very first item of the NACE codes for the classification process, as these are unique in combination with the first two digits.\nFor implementing our models, we use R (version 4.4.3) with keras1 and tensorflow2, accessed through reticulate 3.\n\n\nThe idea of the stacked model is training one model per class level, resulting in three models. Supplementary to the input of the first model (input text as token sequence and as one hot encoded matrices), the second and third model are fed the probabilities for each class derived from the previous model. The input to the second and third model will therefore include the 85 and 86 predicted probabilities from the first and second model respectively (85 different classes for the first level, 86 for the second). By using multiple models to generate one output code, we introduce the problem of generating invalid codes, if we define the most likely code as the combination of all three most likely level-codes(one code per model). To overcome this issue, we filter out all invalid code combinations and only look at valid 5-digit codes. A more in detail explanation is given in section Top-k Codes for Models with Outputs per Level. The figure below illustrates the model architecture. \n\n\n\n\n\nStacked Model Architecture\n\n\n\n\n\n\n\nThe multiple output model receives the same input as the flat classifier, but will generate three outputs, one per hierarchy level (illustrated below). In contrast to the stacked model, this approach only consists of a single model. For each input, we hence get three output vectors, containing the class probabilities for each output level. All three of these outputs need to be concatenated into one valid output codes. This again, like for the stacked model, poses the problem of generating invalid codes.\n\n\n\n\n\nMultiple Outputs Model Architecture\n\n\n\n\n\n\n\nThis model uses the same input, and produces the same output format as the flat classifier. The difference is the alteration of the loss function. While we use the cross entropy for the flat classification, this model uses a hierarchical loss. The hierarchical loss is based on weighted distances, and designed to assign different penalties (or distances) for misclassifications during training. For a correct code, the penalty is zero. The further away the predicted code from the true code, the higher the penalty. These penalty values are set in a penalty matrix. During training, the loss function collects the penalties for each predicted instance and computes the hierarchical loss with it.\nLet \\(k=\\{1,..,n\\}\\) denote all possible classes, our custom hierarchical loss is then defined as, \\[loss=\\sum_kp(k)*d(true,k),\\] where \\(p(k)\\) is the probability for class \\(k\\), and \\(d(true,k)\\) is the penalty for class k given the true class, according to the penalty matrix. This way, during training, the model will learn to favor classes that are closer in distance to the true class to avoid high penalties. We find that using only this custom loss leads to a decrease in performance, which is why we use the cross entropy in combination with our hierarchical loss function. The final loss function we use for the model is a weighted combination of the hierarchical loss and the standard cross-entropy loss. Specifically, 70% of the total loss comes from the hierarchical penalty term and 30% from the cross-entropy term. Formally, this is \\[Loss=0.7*L_{hier}+0.3*L_{ce}.\\]\n\n\n\nAs mentioned in sections Stacked Model and Multiple Outputs, having a model that produces codes for each level (level-codes) introduces two problems: 1) the possibility of generating invalid codes, and 2) the challenge of identifying top-k most probable codes. Our proposed solution follows the below steps:\n\nFor each level, identify the codes that have a probability higher than \\(\\frac{1}{\\# Codes}\\), i.e. the codes with higher probability than random guessing. For example, in the case of NACE, for the third level (5th digit), there are six possible digits. In that case, we only select the codes with probability \\(\\frac{1}{6}\\) or higher.\nFor the remaining codes of all levels, we multiply the probabilities for all code combinations and concatenate the respective level-codes to a 5-digit NACE code.\nRemove the invalid codes resulting from step 2 from the list of possible candidates.\nSort the remaining codes by the computed product of probabilities in descending order.\nOnly keep the top-k codes from the resulting list.\n\nNote that excluding level-codes with probabilities lower than random guessing, and removing invalid codes, introduces the possibility of the list of most probable codes containing less than k codes. In that case, we use the entire list of most probable codes generated by the steps described above. A maximum of k codes can always be computed.",
     "crumbs": [
-      "Report"
+      "Models"
     ]
   },
   {
-    "objectID": "chapters/chapter1.html#hierarchical-loss",
-    "href": "chapters/chapter1.html#hierarchical-loss",
-    "title": "Cluser 3 Report: Hierarchical textclassification",
-    "section": "Hierarchical Loss",
-    "text": "Hierarchical Loss\nThis model uses the same input, and produces the same output format as the flat classifier. The difference is the alteration of the loss function. While we use the cross entropy for the flat classification, this model uses a hierarchical loss. The hierarchical loss is based on weighted distances, and designed to assign different penalties (or distances) for misclassifications during training. For a correct code, the penalty is zero. The further away the predicted code from the true code, the higher the penalty. These penalty values are set in a penalty matrix. During training, the loss function collects the penalties for each predicted instance and computes the hierarchical loss with it.\nLet \\(k=\\{1,..,n\\}\\) denote all possible classes, our custom hierarchical loss is then defined as, \\[loss=\\sum_kp(k)*d(true,k),\\] where \\(p(k)\\) is the probability for class \\(k\\), and \\(d(true,k)\\) is the penalty for class k given the true class, according to the penalty matrix. This way, during training, the model will learn to favor classes that are closer in distance to the true class to avoid high penalties. We find that using only this custom loss leads to a decrease in performance, which is why we use the cross entropy in combination with our hierarchical loss function. The final loss function we use for the model is a weighted combination of the hierarchical loss and the standard cross-entropy loss. Specifically, 70% of the total loss comes from the hierarchical penalty term and 30% from the cross-entropy term. Formally, this is \\[Loss=0.7*L_{hier}+0.3*L_{ce}.\\]",
+    "objectID": "chapters/chapter2.html#stacked-model",
+    "href": "chapters/chapter2.html#stacked-model",
+    "title": "Methods",
+    "section": "",
+    "text": "The idea of the stacked model is training one model per class level, resulting in three models. Supplementary to the input of the first model (input text as token sequence and as one hot encoded matrices), the second and third model are fed the probabilities for each class derived from the previous model. The input to the second and third model will therefore include the 85 and 86 predicted probabilities from the first and second model respectively (85 different classes for the first level, 86 for the second). By using multiple models to generate one output code, we introduce the problem of generating invalid codes, if we define the most likely code as the combination of all three most likely level-codes(one code per model). To overcome this issue, we filter out all invalid code combinations and only look at valid 5-digit codes. A more in detail explanation is given in section Top-k Codes for Models with Outputs per Level. The figure below illustrates the model architecture. \n\n\n\n\n\nStacked Model Architecture",
     "crumbs": [
-      "Report"
+      "Models"
     ]
   },
   {
-    "objectID": "chapters/chapter1.html#top-k-codes-for-models-with-outputs-per-level",
-    "href": "chapters/chapter1.html#top-k-codes-for-models-with-outputs-per-level",
-    "title": "Cluser 3 Report: Hierarchical textclassification",
-    "section": "Top-k Codes for Models with Outputs per Level",
-    "text": "Top-k Codes for Models with Outputs per Level\nAs mentioned in sections Stacked Model and Multiple Outputs, having a model that produces codes for each level (level-codes) introduces two problems: 1) the possibility of generating invalid codes, and 2) the challenge of identifying top-k most probable codes. Our proposed solution follows the below steps:\n\nFor each level, identify the codes that have a probability higher than \\(\\frac{1}{\\# Codes}\\), i.e. the codes with higher probability than random guessing. For example, in the case of NACE, for the third level (5th digit), there are six possible digits. In that case, we only select the codes with probability \\(\\frac{1}{6}\\) or higher.\nFor the remaining codes of all levels, we multiply the probabilities for all code combinations and concatenate the respective level-codes to a 5-digit NACE code.\nRemove the invalid codes resulting from step 2 from the list of possible candidates.\nSort the remaining codes by the computed product of probabilities in descending order.\nOnly keep the top-k codes from the resulting list.\n\nNote that excluding level-codes with probabilities lower than random guessing, and removing invalid codes, introduces the possibility of the list of most probable codes containing less than k codes. In that case, we use the entire list of most probable codes generated by the steps described above. A maximum of k codes can always be computed.",
+    "objectID": "chapters/chapter2.html#multiple-outputs",
+    "href": "chapters/chapter2.html#multiple-outputs",
+    "title": "Methods",
+    "section": "",
+    "text": "The multiple output model receives the same input as the flat classifier, but will generate three outputs, one per hierarchy level (illustrated below). In contrast to the stacked model, this approach only consists of a single model. For each input, we hence get three output vectors, containing the class probabilities for each output level. All three of these outputs need to be concatenated into one valid output codes. This again, like for the stacked model, poses the problem of generating invalid codes.\n\n\n\n\n\nMultiple Outputs Model Architecture",
     "crumbs": [
-      "Report"
+      "Models"
     ]
   },
   {
-    "objectID": "chapters/chapter1.html#footnotes",
-    "href": "chapters/chapter1.html#footnotes",
-    "title": "Cluser 3 Report: Hierarchical textclassification",
+    "objectID": "chapters/chapter2.html#hierarchical-loss",
+    "href": "chapters/chapter2.html#hierarchical-loss",
+    "title": "Methods",
+    "section": "",
+    "text": "This model uses the same input, and produces the same output format as the flat classifier. The difference is the alteration of the loss function. While we use the cross entropy for the flat classification, this model uses a hierarchical loss. The hierarchical loss is based on weighted distances, and designed to assign different penalties (or distances) for misclassifications during training. For a correct code, the penalty is zero. The further away the predicted code from the true code, the higher the penalty. These penalty values are set in a penalty matrix. During training, the loss function collects the penalties for each predicted instance and computes the hierarchical loss with it.\nLet \\(k=\\{1,..,n\\}\\) denote all possible classes, our custom hierarchical loss is then defined as, \\[loss=\\sum_kp(k)*d(true,k),\\] where \\(p(k)\\) is the probability for class \\(k\\), and \\(d(true,k)\\) is the penalty for class k given the true class, according to the penalty matrix. This way, during training, the model will learn to favor classes that are closer in distance to the true class to avoid high penalties. We find that using only this custom loss leads to a decrease in performance, which is why we use the cross entropy in combination with our hierarchical loss function. The final loss function we use for the model is a weighted combination of the hierarchical loss and the standard cross-entropy loss. Specifically, 70% of the total loss comes from the hierarchical penalty term and 30% from the cross-entropy term. Formally, this is \\[Loss=0.7*L_{hier}+0.3*L_{ce}.\\]",
+    "crumbs": [
+      "Models"
+    ]
+  },
+  {
+    "objectID": "chapters/chapter2.html#top-k-codes-for-models-with-outputs-per-level",
+    "href": "chapters/chapter2.html#top-k-codes-for-models-with-outputs-per-level",
+    "title": "Methods",
+    "section": "",
+    "text": "As mentioned in sections Stacked Model and Multiple Outputs, having a model that produces codes for each level (level-codes) introduces two problems: 1) the possibility of generating invalid codes, and 2) the challenge of identifying top-k most probable codes. Our proposed solution follows the below steps:\n\nFor each level, identify the codes that have a probability higher than \\(\\frac{1}{\\# Codes}\\), i.e. the codes with higher probability than random guessing. For example, in the case of NACE, for the third level (5th digit), there are six possible digits. In that case, we only select the codes with probability \\(\\frac{1}{6}\\) or higher.\nFor the remaining codes of all levels, we multiply the probabilities for all code combinations and concatenate the respective level-codes to a 5-digit NACE code.\nRemove the invalid codes resulting from step 2 from the list of possible candidates.\nSort the remaining codes by the computed product of probabilities in descending order.\nOnly keep the top-k codes from the resulting list.\n\nNote that excluding level-codes with probabilities lower than random guessing, and removing invalid codes, introduces the possibility of the list of most probable codes containing less than k codes. In that case, we use the entire list of most probable codes generated by the steps described above. A maximum of k codes can always be computed.",
+    "crumbs": [
+      "Models"
+    ]
+  },
+  {
+    "objectID": "chapters/chapter2.html#footnotes",
+    "href": "chapters/chapter2.html#footnotes",
+    "title": "Methods",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nhttps://keras.io/↩︎\nhttps://tensorflow.rstudio.com/↩︎\nhttps://cran.r-project.org/web/packages/reticulate/index.html↩︎",
     "crumbs": [
-      "Report"
+      "Models"
     ]
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Hierarchical Textclassification - Report and Code repository",
+    "title": "Cluser 3 Report: Hierarchical textclassification",
     "section": "",
     "text": "ReuseCC-BY 4.0",
     "crumbs": [
+      "Cluster 3 Report"
+    ]
+  },
+  {
+    "objectID": "chapters/chapter1.html",
+    "href": "chapters/chapter1.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Introduction\nStandardized code systems, such as NACE, ISCO, or COICOP, are often designed in a hierarchical manner, meaning they can be organized in a tree-like structure, with parent and child nodes. This allows for analysis on different levels of details. These hierarchies can potentially be exploited for the classification of text into such code systems.\nSome attempts have been made to integrate the hierarchical structures into the modelling process. A review of the existing literature can be found here: https://github.com/AIML4OS/WP10/blob/main/LiteratureReviews/literature_review_hierarchical_models.pdf\nAlthough a fair amount of research has been conducted on the topic, the resulting hierarchical models do not seem to increase performances significantly.\nAs part of the AIML4OS project, WP 10 “Text classification” - Cluster 3, we developed our own hierarchical text classification models. This report includes a description of the introduced methods, evaluation and comparisons, as well as conclusions on the topic of hierarchical text classification.",
+    "crumbs": [
       "Introduction"
+    ]
+  },
+  {
+    "objectID": "chapters/chapter3.html",
+    "href": "chapters/chapter3.html",
+    "title": "Evaluation and Comparison",
+    "section": "",
+    "text": "Evaluation and Comparison\nWe evaluate all models using accuracy, top-3 accuracy, top-5 accuracy, top-10 accuracy, and weighted hierarchical accuracy. The hierarchical accuracy takes the hierarchy into account, by counting how the number of levels are predicted correctly up to the first incorrect level. If the first predicted level matches the first true code for the first level, we count 1/3. If both the first and the second level match, we count 2/3. If the entire code is predicted, the hierarchical accuracy will be assigned 1. Note that unless the first level-code is correct, we always count 0. For a predicted code where the second and third level are predicted correctly, but the first is not, we will assign 0 to the prediction. The hierarchical accuracy is then computed by the mean of assigned values for all outputs codes.\nThe table below shows the performances of the three hierarchical models and the flat classifier. The figure displays the same results for easier comparison. We find that only one of the hierarchical models, the hierarchical loss model, achieves higher scores than the flat model. However, this increase in performance is only minimal. The stacked and the multiple output model rank lower in performance than the flat model. This could be attributed to the implemented solution of finding the most probable codes. Altering this process might lead to better predictions.\n\n\n\nComparison of Model Performances\n\n\n\n\n\n\n\n\n\n\nModel\nAccuracy\nHierarchical Accuracy\nTop-3 Acc.\nTop-5 Acc.\nTop-10 Acc.\n\n\n\n\nflat\n0.3467\n0.4129\n0.5201\n0.6030\n0.6784\n\n\nhierarchical_loss\n0.3568\n0.4229\n0.5327\n0.6030\n0.6884\n\n\nmultiple_outs\n0.2789\n0.3608\n0.4347\n0.4749\n0.5352\n\n\nstacked\n0.3090\n0.3769\n0.4146\n0.4447\n0.4975\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe figure below highlights the differences in performance between our implemented hierarchy-aware models and the flat model.",
+    "crumbs": [
+      "Results"
     ]
   }
 ]

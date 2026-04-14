@@ -1,5 +1,6 @@
 ---
-title: "Hierarchical Textclassification - Report and Code repository" 
+title: "Cluser 3 Report: Hierarchical textclassification"
+subtitle: "From Text to Code (AIML WP10)" 
 include-before-body:
   - text: <img src="resources/cover/main2.png" style="max-width:900px;width:100%">
 author:

@@ -1,0 +1,78 @@
+```{r,setup,echo=FALSE,message=FALSE}
+library(ggplot2)
+library(data.table)
+library(openxlsx)
+library(knitr)
+```
+
+
+# Evaluation and Comparison
+
+We evaluate all models using accuracy, top-3 accuracy, top-5 accuracy,
+top-10 accuracy, and weighted hierarchical accuracy. The hierarchical
+accuracy takes the hierarchy into account, by counting how the number of levels are predicted correctly up to the first incorrect level. If
+the first predicted level matches the first true code for the first
+level, we count 1/3. If both the first and the second level match, we
+count 2/3. If the entire code is predicted, the hierarchical accuracy
+will be assigned 1. Note that unless the first level-code is correct, we
+always count 0. For a predicted code where the second and third level
+are predicted correctly, but the first is not, we will assign 0 to the
+prediction. The hierarchical accuracy is then computed by the mean of
+assigned values for all outputs codes.
+
+The table below shows the performances of the three hierarchical models
+and the flat classifier. The figure displays the same results for easier
+comparison. We find that only one of the hierarchical models, the
+hierarchical loss model, achieves higher scores than the flat model.
+However, this increase in performance is only minimal. The stacked and
+the multiple output model rank lower in performance than the flat model.
+This could be attributed to the implemented solution of finding the most
+probable codes. Altering this process might lead to better predictions.
+
+```{r tab:restable,echo=FALSE,message=FALSE}
+flat <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/flat_class.xlsx"))
+hloss <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/hierarchical_loss.xlsx"))
+stacked <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/stacked_class.xlsx"))
+mouts <- openxlsx::read.xlsx(usethis::proj_path("exercises/results/multiple_outs.xlsx"))
+
+res <- do.call(rbind,list(flat,hloss,stacked,mouts))
+setDT(res)
+
+res[metric=="accuarcy",metric:="accuracy"]
+res_wide <- dcast(res,type ~ metric,  value.var = "value")
+names(res_wide) <- c("Model","Accuracy","Hierarchical Accuracy","Top-10 Acc.","Top-3 Acc.","Top-5 Acc.")
+res_wide <- res_wide[,.(Model,Accuracy,`Hierarchical Accuracy`,`Top-3 Acc.`,`Top-5 Acc.`,`Top-10 Acc.`)]
+res_wide <- res_wide[,c("Accuracy","Hierarchical Accuracy","Top-10 Acc.","Top-3 Acc.","Top-5 Acc."):=round(.SD,4),.SDcols=c("Accuracy","Hierarchical Accuracy","Top-10 Acc.","Top-3 Acc.","Top-5 Acc.")]
+
+knitr::kable(res_wide, caption="Comparison of Model Performances\\label{restable}")
+```
+
+```{r,echo=FALSE,message=FALSE,fig.align='center'}
+res[,metric:=factor(metric,levels=c("accuracy","hier_accuracy","top3_accuracy","top5_accuracy","top10_accuracy"))]
+
+ggplot(res)+
+  geom_bar(aes(x=metric,y=value,fill = type),stat="identity",position="dodge")+
+  labs(title="Comparison of model performance",x="",y="")+
+  scale_fill_brewer(palette="Set2", name = "Model", 
+                    labels = c("Flat","Hierarchical Loss", "Multiple Outputs","Stacked")
+                    )+
+  scale_x_discrete(labels=c("Accuracy", "hierarchical Acc.", "Top-3 Acc.","Top-5 Acc.","Top-10 Acc."))+
+  theme_minimal()
+```
+
+The figure below highlights the differences in performance between our implemented
+hierarchy-aware models and the flat model.
+
+```{r,echo=FALSE,message=FALSE,fig.align='center'}
+diff <- res[, diff_to_flat := value - value[type == "flat"], by = metric]
+ggplot(diff[type!="flat",])+
+  geom_bar(aes(x=metric,y=diff_to_flat,fill=type),position="dodge",stat="identity")+
+  labs(title="Performance differences to flat Model",x="",y="difference")+
+  scale_fill_brewer(palette="Set2", name = "Model",
+                    labels = c("Hierarchical Loss", "Multiple Outputs","Stacked")
+                    )+
+  scale_x_discrete(labels=c("Accuracy", "hierarchical Acc.", "Top-3 Acc.","Top-5 Acc.","Top-10 Acc."))+
+  geom_hline(yintercept = 0,color="black",linetype="dashed")+
+  theme_minimal()
+```
+

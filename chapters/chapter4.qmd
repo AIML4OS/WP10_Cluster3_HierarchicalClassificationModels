@@ -1,0 +1,22 @@
+```{r,setup,echo=FALSE,message=FALSE}
+library(ggplot2)
+library(data.table)
+library(openxlsx)
+library(knitr)
+```
+
+# Conclusion
+
+Like previous research suggests, incorporating the hierarchical
+structures of a code system into the modelling process can lead to some,
+although often small, increase in performance. This opens up a
+discussion about the trade-off of performance and resources needed to
+implement such models. These types of hierarchical models are often
+larger, or consist of multiple sub-models, which also leads to higher
+run times and increased need for computational resources. Code
+implementations for model components — such as the custom hierarchical
+loss introduced in [Hierarchical Loss] or other hierarchy-aware
+architectures — are rarely available as open source implementations. When they do exist, they are
+often not ready to use out of the box and require substantial
+adaptation.
+

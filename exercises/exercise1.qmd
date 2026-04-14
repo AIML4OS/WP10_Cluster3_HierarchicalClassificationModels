@@ -3,6 +3,7 @@
 ```{r setup, include=FALSE}
 #knitr::opts_knit$set(root.dir = "exercises")
 knitr::opts_chunk$set(message = FALSE)
+library(here)
 ```
 
 
@@ -14,23 +15,24 @@ run <- F
 
 First we set up the data. For this, we download the NACE dictionary from the Statistics Austria classification data base: https://www.statistik.at/KDBWeb/kdb_VersionAuswahl.do.
 This data is split into training, validation, and test data.
+
 ```{r data, message=FALSE}
 # load helper functions
-source("R/helpers.R")
+source(here("exercises", "R", "helpers.R"))
 # load NACE dictionary as toy data set
-source("R/load_data_NACE.R")
+source(here("exercises", "R", "load_data_NACE.R"))
 
 if(run){
   # load function(s) for hierarchical evaluation
-  source("R/eval.R")
+  source(here("exercises", "R", "eval.R"))
   # model definitions
-  source("R/helper_transformer.R")
+  source(here("exercises", "R", "helper_transformer.R"))
   
   # define target variable to classify
   target <- "Code"
   
   # clean data and split into train/test/valid set
-  source("R/train_test_dat.R") 
+  source(here("exercises", "R", "train_test_dat.R")) 
 }
 # head training data
 head(dat[,.(NACE25,Text)])
@@ -41,9 +43,9 @@ The flat model is a global classifier, that ignores the hierarchical structure o
 ```{r flat}
 # Flat Model --------------------------------------------------------------
 if(run){
-  source("R/flat_model.R")
+  source(here("exercises", "R", "flat_model.R"))
 }else{
-  result_flat <- openxlsx::read.xlsx("results/flat_class.xlsx")
+  result_flat <- openxlsx::read.xlsx(here("exercises","results","flat_class.xlsx"))
 }
 
 result_flat
@@ -54,9 +56,9 @@ The stacked model trains one model per hierarchy level, where each subsequent mo
 ```{r stacked}
 # Stacked Model -----------------------------------------------------------
 if(run){
-  source("R/stacked_model.R")
+  source(here("exercises", "R", "stacked_model.R"))
 }else{
-  res_stacked <- openxlsx::read.xlsx("results/stacked_class.xlsx")
+  res_stacked <- openxlsx::read.xlsx(here("exercises", "results","stacked_class.xlsx"))
 }
 res_stacked
 ```
@@ -66,9 +68,9 @@ The multiple output model uses a single model to predict class probabilities for
 ```{r multipleouts}
 # Multiple Outputs Model --------------------------------------------------
 if(run){
-  source("R/multiple_outputs_model.R")
+  source(here("exercises", "R", "multiple_outputs_model.R"))
 }else{
-  result_multiple_outs <- openxlsx::read.xlsx("results/multiple_outs.xlsx")
+  result_multiple_outs <- openxlsx::read.xlsx(here("exercises", "results","multiple_outs.xlsx"))
 }
 result_multiple_outs
 ```
@@ -78,9 +80,9 @@ This model keeps the same input and output as a flat classifier but replaces the
 ```{r hierloss}
 # Hierarchical Loss -------------------------------------------------------
 if(run){
-  source("hierarchical_loss_model.R")
+  source(here("exercises", "R", "hierarchical_loss_model.R"))
 }else{
-  result_hier_loss <- openxlsx::read.xlsx("results/hierarchical_loss.xlsx")
+  result_hier_loss <- openxlsx::read.xlsx(here("exercises", "results","hierarchical_loss.xlsx"))
 }
 result_hier_loss
 ```

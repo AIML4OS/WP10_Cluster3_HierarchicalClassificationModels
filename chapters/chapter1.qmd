@@ -1,3 +1,6 @@
+# Cluser 3 Report: Hierarchical textclassification
+## From Text to Code (AIML WP10)
+
 ```{r,setup,echo=FALSE,message=FALSE}
 library(ggplot2)
 library(data.table)
@@ -7,25 +10,17 @@ library(knitr)
 
 # Introduction
 
-Standardized code systems, such as NACE, ISCO, or COICOP, are often
-designed in a hierarchical manner, meaning they can be organized in a
-tree-like structure, with parent and child nodes. This allows for
-analysis on different levels of details. These hierarchies can
-potentially be exploited for the classification of text into such code
-systems.
+Official statistical nomenclatures, or standardized code systems such as NACE, ISCO, and COICOP, are often designed as hierarchical taxonomies, meaning they can be represented as tree-like structures of parent and child nodes with leafs at the bottom.
 
-Some attempts have been made to integrate the hierarchical structures
-into the modelling process. A review of the existing literature can be
-found here:
-<https://github.com/AIML4OS/WP10/blob/main/LiteratureReviews/literature_review_hierarchical_models.pdf>
+Such hierarchies allow for analysis at different levels of detail that can be leveraged for classification of text into such code systems.
 
-Although a fair amount of research has been conducted on the topic, the
-resulting hierarchical models do not seem to increase performances
-significantly.
+Some attempts in statistical modelling have been made to do so.
+Although a fair amount of research has already been conducted, the resulting hierarchical models do not seem to increase performances substantially.
 
-As part of the AIML4OS project, WP 10 "Text classification" - Cluster 3,
-we developed our own hierarchical text classification models. This
-report includes a description of the introduced methods, evaluation and
-comparisons, as well as conclusions on the topic of hierarchical text
-classification.
-
+As part of AIML4OS, WP 10 "Text classification" Cluster 3, we reviewed existing literature[^https://github.com/AIML4OS/WP10/blob/main/LiteratureReviews/literature_review_hierarchical_models.pdf] and developed our own hierarchical text classification models.
+Here, we report our research starting with a case study clearly comparing a selection of methods using a dataset based on the Austrian version of NACE.
+The subsequent section compiles various results:
+1) similarly clear comparisons outside officials statistics
+2) additional efforts at National Statistics Institutes (NSIs) based on their versions of the classification systems.
+This enables us to represent conversations about the study of hierarchical classification for official statistics at Statistics Austria, Statistics Denmark, DeStatis (Germany), Statistics Norway, Spanish Statistical Office, and Insee (France).
+In conclusion, we offer perspectives of interest to those pondering similar research.

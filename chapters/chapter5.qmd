@@ -1,0 +1,33 @@
+```{r,setup,echo=FALSE,message=FALSE}
+library(ggplot2)
+library(data.table)
+library(openxlsx)
+library(knitr)
+```
+
+
+# Conclusion
+
+Like previous research suggests, incorporating the hierarchical structures of a code system into the modelling process can lead to some, although often small, increase in performance.
+
+This opens up a discussion about the trade-off of performance and resources needed to implement such models.
+These types of hierarchical models are often larger, or consist of multiple sub-models (like systems of equations).
+This is likely to require more development time and maintainance of the code for it to stay tuned with the evolving nomenclatures.
+It also leads to higher runtimes and increased need for computational resources.
+
+Code implementations for model components — such as the custom hierarchical loss introduced in [Hierarchical Loss] or other hierarchy-aware architectures — are rarely available as open source implementations.
+When they do exist, they are often not ready to use out of the box and require substantial adaptation.
+On that note, we recommend researchers to use programming frameworks that render possible monitoring loss and performance on both training and validation/test datasets simultaneously, because that makes it easier to detect potential overfitting than checking these properties only on the holdout out set.
+
+Hierarchical frameworks are proposed to reduce the number of possible classes per prediction, whether per level or per node (while increasing the total number of labels), and to increase the number of observations, *n* toward the top.
+But the probabilities of each step-wise prediction are dependent and thus tend to decrease per step; and the more steps, the more the predicted probabilities decrease.
+Evaluating performance of models trained using the data holdout method (train/test-split) puts requirements on the data.
+Increasing hierarchical breadth and depth is probably confounded with data imbalance that complicates most classifications.
+With frequencies of only one, classes wreck havoc with performance evaluation, the direction of which may not be straightforward to reason out.
+Features (or independent variables) are observed mostly at the lowest level and so is observably related to that level rather than perhaps a higher-level concept assumed in human-made nomenclatures.
+It is common knowledge that hierarchical taxonomies (in various fields) can break down, and sometimes that is the more valuable pattern.[^e.g. pleitropy, polysemy, or patterns in life-events cf. Savcisens et al., 2024, Nature Computational Science, "Using sequences of life-events to predict human lives", https://www.nature.com/articles/s43588-023-00573-5]
+
+The objective of predicting the best predicted node, or part of a class label, as measured by the hF1 criterion may well be the core of hierarchical modelling.
+Researchers may want to carefully consider whether that is indeed the case, and whether it entails post-hoc decisions discounting the stochasticity of prediction.
+If that is the goal and it is entirely valid, another question could be raised: Given the cost of development and maintainance, at what hierarchical level will a good enough prediction suffice e.g. before manual annotators complete the class label string? In brief, is it just possible to predict obvious high-level classes at a high cost?
+On a last note, if hierarchical models excelled, why is the evidence not any clearer, and why is it not given the same attention as, for instance, transformers?

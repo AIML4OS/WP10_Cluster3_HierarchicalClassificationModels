@@ -91,8 +91,8 @@ One study classified items according to the Norwegian NACE using an LLM with a h
 But the results did not improve compared to a (flat) FastText model.
 Several attempts have been made to classify data according to the Spanish version of NACE.
 In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs. recall on the complete class label (at the leaf node).
-Consequently, the FastText-based LCPN framework was discontinued, and instead the statistical production makes available one FastText-based model per level (LCL) besides the flat model.
-In another ongoing study researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function. The hierarchical F1 metric proposed by Kiritchenko et al. (and employed by DeStatis' Nietzer et al.) are currently being implemented with BERT-based classifiers one of which is based on the global framework by Kiritchenko et al..
+Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production.
+In another ongoing study researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function. And the hierarchical F1 metric (proposed by Kiritchenko et al. and employed by DeStatis' Nietzer et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).
 
 *NACE predictions on a test set*
 | Evaluation metric \ framework | Flat BETO | Hierarchical loss BETO | Flat BERT | Global BERT |

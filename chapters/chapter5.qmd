@@ -25,7 +25,7 @@ Evaluating performance of models trained using the data holdout method (train/te
 Increasing hierarchical breadth and depth is probably confounded with data imbalance that complicates most classifications.
 With frequencies of only one, classes wreck havoc with performance evaluation, the direction of which may not be straightforward to reason out.
 Features (or independent variables) are observed mostly at the lowest level and so is observably related to that level rather than perhaps a higher-level concept assumed in human-made nomenclatures.
-It is common knowledge that hierarchical taxonomies (in various fields) can break down, and sometimes that is the more valuable pattern.[^e.g. pleitropy, polysemy, or patterns in life-events cf. Savcisens et al., 2024, Nature Computational Science, "Using sequences of life-events to predict human lives", https://www.nature.com/articles/s43588-023-00573-5]
+It is common knowledge that hierarchical taxonomies (in various fields) can break down, and sometimes that is the pattern of greater analytical interest.^[e.g. pleitropy, polysemy, or patterns in life-events cf. Savcisens et al., 2024, Nature Computational Science, "Using sequences of life-events to predict human lives", https://www.nature.com/articles/s43588-023-00573-5]
 
 The objective of predicting the best predicted node, or part of a class label, as measured by the hF1 criterion may well be the core of hierarchical modelling.
 Researchers may want to carefully consider whether that is indeed the case, and whether it entails post-hoc decisions discounting the stochasticity of prediction.

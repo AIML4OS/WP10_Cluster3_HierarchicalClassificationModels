@@ -17,7 +17,7 @@ Such hierarchies allow for analysis at different levels of detail that can be le
 Some attempts in statistical modelling have been made to do so.
 Although a fair amount of research has already been conducted, the resulting hierarchical models do not seem to increase performances substantially.
 
-As part of AIML4OS, WP 10 "Text classification" Cluster 3, we reviewed existing literature[^https://github.com/AIML4OS/WP10/blob/main/LiteratureReviews/literature_review_hierarchical_models.pdf] and developed our own hierarchical text classification models.
+As part of AIML4OS, WP 10 "Text classification" Cluster 3, we reviewed existing literature^[https://github.com/AIML4OS/WP10/blob/main/LiteratureReviews/literature_review_hierarchical_models.pdf] and developed our own hierarchical text classification models.
 Here, we report our research starting with a case study clearly comparing a selection of methods using a dataset based on the Austrian version of NACE.
 The subsequent section compiles various results:
 1) similarly clear comparisons outside officials statistics

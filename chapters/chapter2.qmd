@@ -26,12 +26,12 @@ third and fourth digit, and the fifth, the last, digit. We disregard the
 letter as the very first item of the NACE codes for the classification
 process, as these are unique in combination with the first two digits.
 
-For implementing our models, we use R (version 4.4.3) with keras[^https://keras.io/] and
-tensorflow[^https://tensorflow.rstudio.com/], accessed through reticulate [^https://cran.r-project.org/web/packages/reticulate/index.html].
+For implementing our models, we use R (version 4.4.3) with keras^[https://keras.io/] and
+tensorflow^[https://tensorflow.rstudio.com/], accessed through reticulate^[https://cran.r-project.org/web/packages/reticulate/index.html].
 
 ### Stacked Model
 
-The idea of the stacked model is training _one model per class level_ (aka one local classifier per level, LCL[^"Hierarchical multilabel classification based on path evaluation", https://www.sciencedirect.com/science/article/pii/S0888613X15001073]),
+The idea of the stacked model is training _one model per class level_ (aka one local classifier per level, LCL^["Hierarchical multilabel classification based on path evaluation", https://www.sciencedirect.com/science/article/pii/S0888613X15001073]),
 resulting in three models. Supplementary to the input of the
 first model (input text as token sequence and as one hot encoded
 matrices), the second and third model are fed the probabilities for each
@@ -65,17 +65,14 @@ knitr::include_graphics('graphs/multiple_outputs_model_hier.png')
 
 ### Hierarchical Loss
 
-This model uses the same input, and produces the same output format as
-the flat classifier. The difference is the alteration of the loss
-function. While we use the cross-entropy for the flat classification,
-this model uses a hierarchical loss.[^note: This differs from FastText estimated using hierarchical softmax (https://fasttext.cc/docs/en/supervised-tutorial.html#scaling-things-up) which computes a tree from the features, not between the classes]
-The hierarchical loss is based on
-weighted distances, and designed to assign different penalties (or distances)
-for misclassifications during training. For a correct code, the penalty
-is zero. The further away the predicted code from the true code, the
-higher the penalty. These penalty values are set in a penalty matrix. During training,
-the loss function collects the penalties for each predicted instance and
-computes the hierarchical loss with it.
+This model uses the same input, and produces the same output format as the flat classifier.
+The difference is the alteration of the loss function.
+While we use the cross-entropy for the flat classification, this model uses a hierarchical loss.
+The hierarchical loss is based on weighted distances, and designed to assign different penalties (or distances) for misclassifications during training.
+For a correct code, the penalty is zero.
+The further away the predicted code from the true code, the higher the penalty.
+These penalty values are set in a penalty matrix.
+During training, the loss function collects the penalties for each predicted instance and computes the hierarchical loss with it.
 
 Let $k=\{1,..,n\}$ denote all
 possible classes, our custom hierarchical loss is then defined as,

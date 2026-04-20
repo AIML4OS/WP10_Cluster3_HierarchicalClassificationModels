@@ -10,8 +10,8 @@ author:
   - name: Johannes Gussenbauer
     url: https://github.com/JohannesGuss
     email: johannes.gussenbauer@statistik.gv.at
-  - name: Johan Andresen
-    email: JHD@dst.dk
+  - name: JHD
+    email: dstaiml4osjhd@tutanota.com
 date: "2026-04-02"
 license: "CC-BY 4.0"  # Optional
 

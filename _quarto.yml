@@ -29,11 +29,13 @@ website:
       - href: chapters/chapter1.qmd
         text: Introduction
       - href: chapters/chapter2.qmd
-        text: Models
+        text: Case study (methods)
       - href: chapters/chapter3.qmd
-        text: Results
+        text: Case study (evaluation)
       - href: chapters/chapter4.qmd
-        text: Discussion
+        text: Compilation
+      - href: chapters/chapter5.qmd
+        text: Conclusion
 
 format:
   html:

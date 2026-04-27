@@ -1,40 +1,41 @@
-```{r,setup,echo=FALSE,message=FALSE}
-library(ggplot2)
-library(data.table)
-library(openxlsx)
-library(knitr)
-```
+# A compilation of research
 
-# Compilation
+Scarcely does one find similarly clear comparisons of models based on flat and hierarchical frameworks as the case study.
 
-Scarcely does one find similarly clear comparisons of models based on flat and hierarchical frameworks as the above.
-Thus it seems many of the proposed hierarchical frameworks in the literature haven't been presented in a fashion making them as vulnerable as possible to appearing worse than flat versions or other alternatives (if indeed they are worse).
+Without clear comparisons the proposed hierarchical frameworks are less vulnerable to possibly appearing worse (if indeed they are) than flat versions or other extant alternatives.
+
+We therefore compile (a) peer-reviewed research comparing such frameworks besides (b) relevant testimony and less well-documented studies from national statistics institutes into these methods applied in official statistics.
+
+#### Peer-Reviewed Academic Publications
 
 We are aware of six peer-reviewed academic publications that does provide such neat comparison.
+
 Schuurmans and Frăsincar (2023) displayed four tables of marginally better hierarchical performance scored using F1, micro-accuracy, macro-precision, and recall across four datasets.^["Global Hierarchical Neural Networks using Hierarchical Softmax", https://arxiv.org/pdf/2308.01210]
+
 Very similar results appear in Table 3 of Ramírez-Corona et al. (2016) based on 18 datasets.^["Hierarchical multilabel classification based on path evaluation", https://www.sciencedirect.com/science/article/pii/S0888613X15001073]
+
 Rousu et al. (2006) reported in Table 2 3-5 point differences on F1 across three datasets comparing flat with hierarchical support vector machines.^["Kernel-Based Learning of Hierarchical Multilabel Classification Models", https://www.jmlr.org/papers/volume7/rousu06a/rousu06a.pdf]
+
 Kiritchenko et al. (2006) provided a table containing results in several cases favoring hierarchical frameworks (local and global AdaBoost.MH) scored using their novel hierarchical F1 (hF1) metric across five natural datasets and 10 synthetic datasets.^["Learning and Evaluation in the Presence of Class Hierarchies: Application to Text Categorization", https://www.svkir.com/papers/Kiritchenko-et-al-hierarchical-AI-2006.pdf]
-The proposed hF1 comes a long way as a criterion for hierarchical classification.
-But its credit to partially correct classifications occurs us to possibly lack punishment proportional to the distance to the leaf.
-In other words, the metric may not clearly account for the share of the full class label being correctly predicted.
-In that view, the success of their global framework--i.e. a single classifier of all nodes pruned for predictions worse than some threshold--is less surprising because predicting any node well is deemed successful.
-This objective may be just right, but may need some adjustment if the full string of the class labels are needed by the end of the day.
+The success of their global framework--i.e. a single classifier of all nodes pruned for predictions worse than some threshold--is less surprising because correctly predicting any node on (or level of) a branch is deemed successful.
+
 Differences of 1.5-7 points on macro-averaged F1 between a flat and a hierarchical neural network across four datasets were displayed in Table 6 and Table 7 by Ruiz and Srinivasan (2002).^["Hierarchical Text Categorization Using Neural Networks", https://link.springer.com/content/pdf/10.1023/A%3A1012782908347.pdf]
+
 Dumais and Chen (2000) found an overall 2 point performance difference between a flat (.476) and a hierarchical support vector machine (.497).^["Hierarchical Classification of Web Content", http://susandumais.com/sigir00.pdf]
+
+#### Research at NSIs
 
 Additional efforts to utilize hierarchical frameworks for official statistics have been made at NSIs.
 Some of it is new work in progress, some is previous research that was set on hold (e.g. because it did not seem worthwhile), and yet others have lain dormant but is now being picked up again.
 For different reasons much of this work--there is one exception--therefore does not currently lend itself for neatly comparing performance of hierarchical and flat frameworks.
 
-###### *COICOP at Destatis*
-Nietzer et al. (2025) evaluated hierarchical and flat frameworks of the German adaptation of the COICOP classification system scored using Kiritchenko and colleagues' hierarchical F1 (see table).^["Hierarchisches Klassifizieren von Scannerdaten: ein Methodenvergleich mit Anwendung in der Verbraucherpreisstatistik", https://www.econstor.eu/bitstream/10419/313330/1/1919709770.pdf]
+##### *COICOP at Destatis*
+Nietzer et al. (2025) evaluated hierarchical and flat frameworks of the German adaptation of the COICOP classification system scored using Kiritchenko and colleagues' hierarchical F1 (see @tbl-coicop).^["Hierarchisches Klassifizieren von Scannerdaten: ein Methodenvergleich mit Anwendung in der Verbraucherpreisstatistik", https://www.econstor.eu/bitstream/10419/313330/1/1919709770.pdf]
 "In summary, the differences between the flat classifier and the hierarchical classifiers are small" (p. 75).
 We agree with the authors' assessment, finding it notable that the flat classifier performed on par with the others based on a metric, the hF1, designed exactly to capture the assumed benefit of hierarchical frameworks.
 
-10-level COICOP
 | Evaluation metric \ framework | Flat classifier | LCN (local classifier per node) | LCPN (local classifier per parent node) |
-|:------------------------------|:---------------:|:-------------------------------:|:---------------------------------------:|
+|:------------------------------|----------------:|--------------------------------:|----------------------------------------:|
 | makro F1 (10-digit)  | 0.861 | 0.864 | 0.860 |
 | hF1 (10-digit)       | 0.951 | 0.950 | 0.946 |
 | Recall (10-digit)    | 0.880 | 0.881 | 0.876 |
@@ -44,12 +45,15 @@ We agree with the authors' assessment, finding it notable that the flat classifi
 | makro F1 (4-digit)   | 0.944 | 0.947 | 0.940 |
 | makro F1 (5-digit)   | 0.893 | 0.902 | 0.895 |
 | makro F1 (7-digit)   | 0.869 | 0.874 | 0.869 |
+
+: 10-level COICOP {#tbl-coicop}
+
 *Note: adopted and translated from Table 2 in the Destatis publication by Nietzer et al.*
 
-###### *PPP (COICOP) at DST*
+##### *PPP (COICOP) at DST*
 Eurostat's Purchasing Power Parities (PPP) nomenclature extend COICOP and has been adapted to the Danish context providing 7 hierarchical levels.
 The nomenclature currently contains ~250 basic headings which may be surveyed, each describing multiple classes at the lowest, seventh level (aka the leaf nodes).
-For instance; the headings Food, Drinks, and Tobacco contains ~500 possible classes; Personal appearance ~400 possible classes; and House and garden ~50 possible classes.
+For instance; the heading "Food, Drinks, and Tobacco" contains ~500 possible classes; "Personal appearance" ~400 possible classes; and "House and garden" ~50 possible classes (at the leaf).
 
 Hierarchical frameworks of different types were initially developed to classify products in sales data provided by major retailers according to PPP-classes:
 A global and a LCPN (i.e. local classifier per parent node) framework (for a brief description of these frameworks, see Ramírez-Corona, Sucar, and Morales (2016).^["Hierarchical multilabel classification based on path evaluation", https://www.sciencedirect.com/science/article/pii/S0888613X15001073])
@@ -64,7 +68,7 @@ And the development of the hierarchical frameworks led to requesting more data t
 More data was made available at the time when the flat framework was employed.
 As such, the scores are not directly comparable, and more work on either the global or LCPNs will be needed to provide that.
 
-Recall that a global model is one model predicting not only the complete class labels (or leaf) but all label substrings (or parent nodes).
+Recall that a global model is one model predicting not only the leaf but all parent nodes.
 The global framework was coded such that the output layer multiplied softmax values (or multinomial logits) from each parent node to the values of the child node.
 As such, predictions and their probabilities were computed conditional on the preceding ones top-down much like the detection system by Redmon and Farhadi (2016).^["YOLO9000: Better, Faster, Stronger", https://arxiv.org/pdf/1612.08242]
 We may represent this as follows:
@@ -78,29 +82,33 @@ $$
 , where $L_k$ represents which node is chosen at level $k$, $n_k$ is a specific node at level $k$, and $P(L_1=n_1 \mid L_0) = P(L_1=n_1)$.
 
 This means that predicting the bottom level (i.e. the leaf node), besides predicting and adding seven short strings, involves calculating six conditional probabilities.
-For a given observed product, if, for arguments sake, all nodes below the first known one are predicted with a probability of 0.9, then the final conditional probability will yield $1 \ast .9^6 \approx .5$.
+For a given observed product, if, for arguments sake, all nodes below the first known one are predicted with a probability of 0.9, then the final conditional probability will yield $1 \ast .9^{7-1} \approx .5$.
 As such, with increasing hierarchical breadth and depth, the predicted probability tend to zero, all else being equal.
 Because the purpose of global frameworks is to enable models to learn to predict all nodes, the code for such frameworks must correspond exactly to the observed classes.
 In statistical production, the observations (here aggregated purchases) to be classified may represent classes that have not been observed before i.e. during training and testing.
 Deploying such model in statistical production thus requires coding up the entire nomenclature or those domain areas that might be observed; in turn involving not merely all classes but all the parent nodes or substrings of the complete class labels.
 In other words, calculations for all (to-be) observed nodes must be coded, at least in the current form of the programmatic implementation of the framework.
 
-###### *NACE at SSB*, *NACE at INE*, and *COICOP at Insee*
+##### *NACE at SSB*, *NACE at INE*, and *COICOP at Insee*
 Additional research on hierarchical classification have been carried out at NSIs focussing on NACE and COICOP.
+
 One study classified items according to the Norwegian NACE using an LLM with a hierarchical prompting scheme.
 But the results did not improve compared to a (flat) FastText model.^[FastText can be estimated using hierarchical softmax, which enables faster compute, not better or more accurate predictions, in fact, rather the contrary. It computes a tree from the features, not based on the classes. See https://fasttext.cc/docs/en/supervised-tutorial.html#scaling-things-up]
-Several attempts have been made to classify data according to the Spanish version of NACE.
-In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs. recall on the complete class label (at the leaf node).
-Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production.
-In another ongoing study researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function.
-And the hierarchical F1 metric (proposed by Kiritchenko et al. and employed by DeStatis' Nietzer et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).
 
-*NACE predictions on a test set*
+Several attempts have been made to classify data according to the Spanish version of NACE.
+In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs. recall on the leaf.
+Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production.
+In another ongoing study (see @tbl-nace) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function.
+And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).
+
 | Evaluation metric \ framework | Flat BETO | Hierarchical loss BETO | Flat BERT | Global BERT |
-|:------------------------------|:---------:|:----------------------:|:---------:|:-----------:|
+|:------------------------------|----------:|-----------------------:|----------:|------------:|
 | accuracy    | 0.646 | 0.635 | -     | -     |
 | weighted F1 | 0.651 | 0.646 | 0.650 | 0.647 |
 | hF1         | -     | -     | 0.682 | 0.774 |
+
+: NACE predictions on a test set {#tbl-nace}
+
 *Note: The results reported here are preliminary, unpublished, and subject to uncertainty.*
 
 Finally, survey items were classified according to the French COICOP using torchTextClassifiers^[https://github.com/InseeFrLab/torch-fastText/; https://github.com/InseeFrLab/torchTextClassifiers] to compute one model per level (LCL).

@@ -63,7 +63,7 @@ stacked model, poses the problem of generating invalid codes.
 knitr::include_graphics('graphs/multiple_outputs_model_hier.png')
 ```
 
-### Hierarchical Loss
+### Hierarchical Loss {#sec-hl}
 
 This model uses the same input, and produces the same output format as the flat classifier.
 The difference is the alteration of the loss function.

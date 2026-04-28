@@ -7,33 +7,34 @@ These types of hierarchical models are often larger, or consist of multiple sub-
 This is likely to require more development time and maintainance of the code for it to stay tuned with the evolving nomenclatures.
 It also leads to higher runtimes and increased need for computational resources.
 
-Code implementations for model components — such as the custom hierarchical loss introduced in [Hierarchical Loss] or other hierarchy-aware architectures — are rarely available as open source implementations.
+Code implementations for model components---such as the custom hierarchical loss (introduced in @sec-hl) or other hierarchy-aware architectures---are rarely available as open source implementations.
 When they do exist, they are often not ready to use out of the box and require substantial adaptation.
 On that note, we recommend researchers to use programming frameworks that render possible monitoring loss and performance on both training and validation/test datasets simultaneously, because that makes it easier to detect potential overfitting than checking these properties only on the holdout out set.
 
-The objective of predicting the most of a branch if not down to the leaf (or largest substring of a class label) may well be the core of hierarchical classification.
+The objective of predicting the most of a branch (or largest substring of a class label) if not down to the leaf appears to be the core of hierarchical classification.
 NSIs and researchers alike may want to carefully consider whether that is indeed the case.
 The hF1 metric proposed by Kirithcenko and colleagues (2006) comes a long way as a criterion for that goal.
+It accounts for the share of the full class label being correctly predicted.
 Yet, at what hierarchical level will a prediction be good enough for statistical production, not least given the cost of development and maintainance?
 For instance, is a model worthwhile if it is able to correctly predict seemingly obvious high-level classes at a high cost?
-Will manual annotators (in the loop) have to complete the class label string or will they start identifying the correct class from scratch, putting aside a given partially predicted label?
-Moreover, the metric does not seem to account for the share of the full class label being correctly predicted (albeit it rewards correctly classifying lower-level nodes).
-In other word, their may be a case for the argument that hF1 lacks punishment proportional to the distance between the lowest correctly predicted node and the leaf, and that some adjustment to it could be warranted if the full string of the class labels are in fact needed by the end of the day.
+Will manual annotators (in the loop) have to complete the class label string or will they start identifying the correct class from scratch, putting aside a given partial label predicted by the ML-system?
 
 Virtually all hierarchical frameworks are proposed to leverage taxonomic assumptions to reduce the number of possible classes per prediction, whether per level or per node.
-An exception to the rule are global ones predicting all nodes independently.
-To be sure, all hierarchical frameworks increase the total number of class labels by including substrings, besides increasing the number of observations, *n* toward the top.
+An exception to the rule are global multilabel models predicting all nodes independently.
+And all hierarchical frameworks surely increase the total number of class labels by including nodes between root and leaves, besides increasing the number of observations, *n* toward the top.
 But the probabilities of each step-wise prediction are dependent and thus tend to decrease per step; and the more steps, the more the predicted probabilities decrease.
-Yet, it is known from LLMs, transformers, and deep neural network that this needn't be a problem for providing useful predictions given sufficient compute and data (at least to train the models).
+To be sure, it is known from LLMs, transformers, and deep neural network that chains of conditional probabilities needn't be a problem for providing useful predictions given sufficient compute and data.
+This suggests that chaining predictions is not itself making classification harder or more problematic but rather leads to a new problem which is to get compute and data.
 
-Increasing hierarchical breadth and depth appears confounded with data imbalance.
+Increasing hierarchical breadth and depth---in the training data and the expected data in production, given the taxonomic nomenclature of classification systems---appears confounded with data imbalance.
 This complicates most classifications and in particular performance evaluation using the data holdout method (train/test-split).
 Frequencies of only one wreck havoc with performance evaluation, the direction of which may not be straightforward to reason out.
-That is, is the model better or worse than the score suggests?
-To the extent hierarchical frameworks might outcompete flat frameworks on data that is increasingly hierarchically broad and deep, training the models probably also require more effort to address data imbalance so as to evaluated performance properly.
+In other words, a question will be whether the model performance better or worse than the score suggests.
+To the extent hierarchical frameworks might outcompete flat frameworks on data that is increasingly hierarchically broad and deep, training the models probably also requires more effort to address data imbalance so as to evaluate performance properly.
 
-We have come to our final thoughts.
+A few final thoughts.
 Features (or independent variables) are observed mostly at the lowest level and so is observably related to that level.
 Is it fair to assume that those features are also related to a higher-level concept implied in human-made nomenclatures?
 It is common knowledge that hierarchical taxonomies (in various fields) can break down, and sometimes that is the pattern of greater analytical interest.^[e.g. pleitropy, polysemy, or patterns in life-events cf. Savcisens et al., 2024, Nature Computational Science, "Using sequences of life-events to predict human lives", https://www.nature.com/articles/s43588-023-00573-5]
-On a last note, if hierarchical models excelled, why is the evidence not any clearer, and why is it not given the same attention by NSIs as, for instance, transformers?
+If hierarchical models excelled, why is the evidence not any clearer, and why is it not given the same attention by NSIs as, for instance, transformers?
+We hope readers feel that some hints or partial answers to these questions have been provided here perhaps even to have clarified what can help automate classification of data for official statistics.

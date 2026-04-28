@@ -16,8 +16,7 @@ Very similar results appear in Table 3 of Ramírez-Corona et al. (2016) based on
 
 Rousu et al. (2006) reported in Table 2 3-5 point differences on F1 across three datasets comparing flat with hierarchical support vector machines.^["Kernel-Based Learning of Hierarchical Multilabel Classification Models", https://www.jmlr.org/papers/volume7/rousu06a/rousu06a.pdf]
 
-Kiritchenko et al. (2006) provided a table containing results in several cases favoring hierarchical frameworks (local and global AdaBoost.MH) scored using their novel hierarchical F1 (hF1) metric across five natural datasets and 10 synthetic datasets.^["Learning and Evaluation in the Presence of Class Hierarchies: Application to Text Categorization", https://www.svkir.com/papers/Kiritchenko-et-al-hierarchical-AI-2006.pdf]
-The success of their global framework--i.e. a single classifier of all nodes pruned for predictions worse than some threshold--is less surprising because correctly predicting any node on (or level of) a branch is deemed successful.
+Kiritchenko et al. (2006) provided a table containing results in several cases favoring hierarchical frameworks (especially global but also local AdaBoost.MH) scored using their novel hierarchical F1 (hF1) metric across five natural datasets and 10 synthetic datasets.^["Learning and Evaluation in the Presence of Class Hierarchies: Application to Text Categorization", https://www.svkir.com/papers/Kiritchenko-et-al-hierarchical-AI-2006.pdf]
 
 Differences of 1.5-7 points on macro-averaged F1 between a flat and a hierarchical neural network across four datasets were displayed in Table 6 and Table 7 by Ruiz and Srinivasan (2002).^["Hierarchical Text Categorization Using Neural Networks", https://link.springer.com/content/pdf/10.1023/A%3A1012782908347.pdf]
 

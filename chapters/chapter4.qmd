@@ -8,19 +8,21 @@ We therefore compile (a) peer-reviewed research comparing such frameworks beside
 
 #### Peer-Reviewed Academic Publications
 
-We are aware of six peer-reviewed academic publications that does provide such neat comparison.
+We are aware of seven peer-reviewed academic publications that does provide such neat comparison.
 
-Schuurmans and Frăsincar (2023) displayed four tables of marginally better hierarchical performance scored using F1, micro-accuracy, macro-precision, and recall across four datasets.^["Global Hierarchical Neural Networks using Hierarchical Softmax", https://arxiv.org/pdf/2308.01210]
+Dumais and Chen (2000) found an overall 2 point performance difference between a flat (.476) and a hierarchical support vector machine (.497).^["Hierarchical Classification of Web Content", http://susandumais.com/sigir00.pdf]
 
-Very similar results appear in Table 3 of Ramírez-Corona et al. (2016) based on 18 datasets.^["Hierarchical multilabel classification based on path evaluation", https://www.sciencedirect.com/science/article/pii/S0888613X15001073]
+Differences of 1.5-7 points on macro-averaged F1 between a flat and a hierarchical neural network across four datasets were displayed in Table 6 and Table 7 by Ruiz and Srinivasan (2002).^["Hierarchical Text Categorization Using Neural Networks", https://link.springer.com/content/pdf/10.1023/A%3A1012782908347.pdf]
 
 Rousu et al. (2006) reported in Table 2 3-5 point differences on F1 across three datasets comparing flat with hierarchical support vector machines.^["Kernel-Based Learning of Hierarchical Multilabel Classification Models", https://www.jmlr.org/papers/volume7/rousu06a/rousu06a.pdf]
 
 Kiritchenko et al. (2006) provided a table containing results in several cases favoring hierarchical frameworks (especially global but also local AdaBoost.MH) scored using their novel hierarchical F1 (hF1) metric across five natural datasets and 10 synthetic datasets.^["Learning and Evaluation in the Presence of Class Hierarchies: Application to Text Categorization", https://www.svkir.com/papers/Kiritchenko-et-al-hierarchical-AI-2006.pdf]
 
-Differences of 1.5-7 points on macro-averaged F1 between a flat and a hierarchical neural network across four datasets were displayed in Table 6 and Table 7 by Ruiz and Srinivasan (2002).^["Hierarchical Text Categorization Using Neural Networks", https://link.springer.com/content/pdf/10.1023/A%3A1012782908347.pdf]
+Marginally better hierarchical performance were shown in Table 3 of Ramírez-Corona et al. (2016) based on 18 datasets.^["Hierarchical multilabel classification based on path evaluation", https://www.sciencedirect.com/science/article/pii/S0888613X15001073]
 
-Dumais and Chen (2000) found an overall 2 point performance difference between a flat (.476) and a hierarchical support vector machine (.497).^["Hierarchical Classification of Web Content", http://susandumais.com/sigir00.pdf]
+Very similar results based on several frameworks compared using flat and hierarchical evaluation criteria were published in Table 1 by Stein et al. (2018).^["An Analysis of Hierarchical Text Classification Using Word Embeddings", https://arxiv.org/pdf/1809.01771]
+
+Schuurmans and Frăsincar (2023) displayed four tables in which hierarchical performance also turned out to be just better as scored using F1, micro-accuracy, macro-precision, and recall across four datasets.^["Global Hierarchical Neural Networks using Hierarchical Softmax", https://arxiv.org/pdf/2308.01210]
 
 #### Research at NSIs
 

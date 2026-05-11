@@ -14,8 +14,9 @@ The input texts of the test data is excluded from the training data, meaning tha
 
 ## Methods
 
-We compare three different hierarchical approaches to flat
-classification. The three hierarchical approaches are:
+We compare three different hierarchical approaches to flat classification.
+The flat model ignores the hierarchy in the data of the dependent variable, and is used as a benchmark for the other models.
+The three hierarchical approaches are:
 
 -   Stacked Model
 -   Multiple Outputs
@@ -29,7 +30,7 @@ process, as these are unique in combination with the first two digits.
 For implementing our models, we use R (version 4.4.3) with keras^[https://keras.io/] and
 tensorflow^[https://tensorflow.rstudio.com/], accessed through reticulate^[https://cran.r-project.org/web/packages/reticulate/index.html].
 
-### Stacked Model
+### Stacked Model {#sec-stack}
 
 The idea of the stacked model is training _one model per class level_ (aka one local classifier per level, LCL^["Hierarchical multilabel classification based on path evaluation", https://www.sciencedirect.com/science/article/pii/S0888613X15001073]),
 resulting in three models. Supplementary to the input of the
@@ -47,20 +48,19 @@ in detail explanation is given in section [Top-k Codes for Models with
 Outputs per Level]. The figure below illustrates the model architecture.
 
 ```{r, out.width='30%', fig.align='center', fig.cap='Stacked Model Architecture',include=T,echo=F}
-knitr::include_graphics('graphs/stacked_model_hier.png')
+knitr::include_graphics('images/stacked_model_hier.png')
 ```
 
-### Multiple Outputs
+### Multiple Outputs {#sec-multi}
 
-The multiple output model receives the same input as the flat
-classifier, but will generate three outputs, one per hierarchy level (illustrated below).
+The multiple output model receives the same input as the flat classifier, but will generate three outputs, one per hierarchy level (illustrated below).
 In contrast to the stacked model, this approach only consists of a single model.
 For each input, we hence get three output vectors, containing the class
 probabilities for each output level. All three of these outputs need to
 be concatenated into one valid output codes. This again, like for the
 stacked model, poses the problem of generating invalid codes.
 ```{r, out.width='50%', fig.align='center', fig.cap='Multiple Outputs Model Architecture',include=T,echo=F}
-knitr::include_graphics('graphs/multiple_outputs_model_hier.png')
+knitr::include_graphics('images/multiple_outputs_model_hier.png')
 ```
 
 ### Hierarchical Loss {#sec-hl}
@@ -74,10 +74,11 @@ The further away the predicted code from the true code, the higher the penalty.
 These penalty values are set in a penalty matrix.
 During training, the loss function collects the penalties for each predicted instance and computes the hierarchical loss with it.
 
-Let $k=\{1,..,n\}$ denote all
-possible classes, our custom hierarchical loss is then defined as,
+Let $k=\{1,..,n\}$ denote all possible classes, our custom hierarchical loss is then defined as,
 
-$$loss=\sum_kp(k)*d(true,k),$$
+$$
+loss=\sum_kp(k)*d(true,k),
+$$
 
 where $p(k)$ is the probability for class $k$, and $d(true,k)$ is the penalty for class $k$ given the true class,
 according to the penalty matrix. This way, during training, the model will
@@ -89,21 +90,23 @@ hierarchical loss and the standard cross-entropy loss. Specifically, 70%
 of the total loss comes from the hierarchical penalty term and 30% from
 the cross-entropy term. Formally, this is
 
-$$Loss=0.7*L_{hier}+0.3*L_{ce}.$$
+$$
+Loss=0.7*L_{hier}+0.3*L_{ce}.
+$$
 
 ### Top-k Codes for Models with Outputs per Level
 
-As mentioned in sections [Stacked Model] and [Multiple Outputs], having
+As mentioned in sections @sec-sec-stack and @sec-sec-multi, having
 a model that produces codes for each level (level-codes) introduces two
 problems: 1) the possibility of generating invalid codes, and 2) the
 challenge of identifying top-k most probable codes. Our proposed
 solution follows the below steps:
 
-1.  For each level, identify the codes that have a probablity higher
+1.  For each level, identify the codes that have a probability higher
     than $\frac{1}{\# Codes}$, i.e. the codes with higher probability
     than random guessing. For example, in the case of NACE, for the
     third level (5th digit), there are six possible digits. In that
-    case, we only select the codes with probablity $\frac{1}{6}$ or
+    case, we only select the codes with probability $\frac{1}{6}$ or
     higher.
 2.  For the remaining codes of all levels, we multiply the probabilities
     for all code combinations and concatenate the respective level-codes
@@ -114,7 +117,7 @@ solution follows the below steps:
     descending order.
 5.  Only keep the top-k codes from the resulting list.
 
-Note that excluding level-codes with probablities lower than random
+Note that excluding level-codes with probabilities lower than random
 guessing, and removing invalid codes, introduces the possibility of the
 list of most probable codes containing less than k codes. In that case,
 we use the entire list of most probable codes generated by the steps

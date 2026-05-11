@@ -20,13 +20,13 @@ will be assigned 1. Note that unless the first level-code is correct, we
 always count 0. For a predicted code where the second and third level
 are predicted correctly, but the first is not, we will assign 0 to the
 prediction. The hierarchical accuracy is then computed by the mean of
-assigned values for all outpus codes.
+assigned values for all output codes.
 
 The table below shows the performances of the three hierarchical models
 and the flat classifier. The figure displays the same results for easier
 comparison. We find that only one of the hierarchical models, the
 hierachical loss model, achieves higher scores than the flat model.
-However, not only is this increase in performance only minimal.
+However, not only is this increase in performance minimal.
 The performance would have been poorer had the loss function been based
 solely on the hierarchically informed distance penalty matrix, not
 combined with cross-entropy loss (ratio 7:3). The stacked and

@@ -3,6 +3,7 @@ library(ggplot2)
 library(data.table)
 library(openxlsx)
 library(knitr)
+library(usethis)
 ```
 
 # Case study
@@ -27,7 +28,7 @@ third and fourth digit, and the fifth, the last, digit. We disregard the
 letter as the very first item of the NACE codes for the classification
 process, as these are unique in combination with the first two digits.
 
-For implementing our models, we use R (version 4.4.3) with keras^[https://keras.io/] and
+For implementing our models, we use R (version 4.4.3) with keras3^[https://keras.io/] and
 tensorflow^[https://tensorflow.rstudio.com/], accessed through reticulate^[https://cran.r-project.org/web/packages/reticulate/index.html].
 
 ### Stacked Model {#sec-stack}
@@ -50,7 +51,6 @@ Outputs per Level]. The figure below illustrates the model architecture.
 ```{r, out.width='30%', fig.align='center', fig.cap='Stacked Model Architecture',include=T,echo=F}
 knitr::include_graphics('images/stacked_model_hier.png')
 ```
-
 ### Multiple Outputs {#sec-multi}
 
 The multiple output model receives the same input as the flat classifier, but will generate three outputs, one per hierarchy level (illustrated below).
@@ -60,7 +60,7 @@ probabilities for each output level. All three of these outputs need to
 be concatenated into one valid output codes. This again, like for the
 stacked model, poses the problem of generating invalid codes.
 ```{r, out.width='50%', fig.align='center', fig.cap='Multiple Outputs Model Architecture',include=T,echo=F}
-knitr::include_graphics('images/multiple_outputs_model_hier.png')
+knitr::include_graphics("images/multiple_outputs_model_hier.png")
 ```
 
 ### Hierarchical Loss {#sec-hl}

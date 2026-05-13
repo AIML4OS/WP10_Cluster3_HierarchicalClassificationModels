@@ -7,6 +7,7 @@ project:
     - chapters/chapter2.qmd
     - chapters/chapter3.qmd
     - chapters/chapter4.qmd
+    - chapters/chapter5.qmd
 
 website:
   page-navigation: true
@@ -29,13 +30,13 @@ website:
       - href: chapters/chapter1.qmd
         text: Introduction
       - href: chapters/chapter2.qmd
-        text: Case study (methods)
+        text: Case study - models
       - href: chapters/chapter3.qmd
-        text: Case study (evaluation)
+        text: Case study - results
       - href: chapters/chapter4.qmd
         text: Compilation
       - href: chapters/chapter5.qmd
-        text: Conclusion
+        text: Discussion
 
 format:
   html:

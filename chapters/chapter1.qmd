@@ -1,6 +1,3 @@
-# Cluser 3 Report: Hierarchical textclassification
-## From Text to Code (AIML WP10)
-
 # Introduction
 
 Official statistical nomenclatures, or standardized code systems such as NACE, ISCO, and COICOP, are often designed as hierarchical taxonomies. They can be represented as tree-like structures of parent and child nodes with the root at the very top and leafs at the bottom, where the leafs are the complete class label strings whereas branches of nodes without leafs are substrings or incomplete classes.

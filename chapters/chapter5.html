@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>chapter4 – From text to code (WP10) - Hierarchical Text Classification (Cluster 3)</title>
+<title>chapter5 – From text to code (WP10) - Hierarchical Text Classification (Cluster 3)</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/chapter5.html" rel="next">
-<link href="../chapters/chapter3.html" rel="prev">
+<link href="../chapters/chapter4.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -73,35 +72,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -115,7 +85,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/chapter4.html">Compilation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/chapter5.html">Discussion</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,13 +137,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/chapter4.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/chapter4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Compilation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/chapter5.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/chapter5.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Discussion</span></a>
   </div>
 </li>
@@ -187,9 +157,9 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a-compilation-of-research" id="toc-a-compilation-of-research" class="nav-link active" data-scroll-target="#a-compilation-of-research">A compilation of research</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link active" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/edit/main/chapters/chapter4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/blob/main/chapters/chapter4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/edit/main/chapters/chapter5.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/blob/main/chapters/chapter5.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
@@ -197,205 +167,24 @@ window.Quarto = {
 
 
 
-<section id="a-compilation-of-research" class="level1">
-<h1>A compilation of research</h1>
-<p>Scarcely does one find similarly clear comparisons of models based on flat and hierarchical frameworks as the case study.</p>
-<p>Without clear comparisons the proposed hierarchical frameworks are less vulnerable to possibly appearing worse (if indeed they are) than flat versions or other extant alternatives.</p>
-<p>We therefore compile (a) peer-reviewed research comparing such frameworks besides (b) relevant testimony and less well-documented studies from national statistics institutes into these methods applied in official statistics.</p>
-<section id="peer-reviewed-academic-publications" class="level4">
-<h4 class="anchored" data-anchor-id="peer-reviewed-academic-publications">Peer-Reviewed Academic Publications</h4>
-<p>We are aware of seven peer-reviewed academic publications that does provide such neat comparison.</p>
-<p>Dumais and Chen (2000) found an overall 2 point performance difference between a flat (.476) and a hierarchical support vector machine (.497).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>Differences of 1.5-7 points on macro-averaged F1 between a flat and a hierarchical neural network across four datasets were displayed in Table 6 and Table 7 by Ruiz and Srinivasan (2002).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>Rousu et al.&nbsp;(2006) reported in Table 2 3-5 point differences on F1 across three datasets comparing flat with hierarchical support vector machines.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>Kiritchenko et al.&nbsp;(2006) provided a table containing results in several cases favoring hierarchical frameworks (especially global but also local AdaBoost.MH) scored using their novel hierarchical F1 (hF1) metric across five natural datasets and 10 synthetic datasets.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<p>Marginally better hierarchical performance were shown in Table 3 of Ramírez-Corona et al.&nbsp;(2016) based on 18 datasets.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
-<p>Very similar results based on several frameworks compared using flat and hierarchical evaluation criteria were published in Table 1 by Stein et al.&nbsp;(2018).<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
-<p>Schuurmans and Frăsincar (2023) displayed four tables in which hierarchical performance also turned out to be just better as scored using F1, micro-accuracy, macro-precision, and recall across four datasets.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-</section>
-<section id="research-at-nsis" class="level4">
-<h4 class="anchored" data-anchor-id="research-at-nsis">Research at NSIs</h4>
-<p>Additional efforts to utilize hierarchical frameworks for official statistics have been made at NSIs. Some of it is new work in progress, some is previous research that was set on hold (e.g.&nbsp;because it did not seem worthwhile), and yet others have lain dormant but is now being picked up again. For different reasons much of this work—there is one exception—therefore does not currently lend itself for neatly comparing performance of hierarchical and flat frameworks.</p>
-<section id="coicop-at-destatis" class="level5">
-<h5 class="anchored" data-anchor-id="coicop-at-destatis"><em>COICOP at Destatis</em></h5>
-<p>Nietzer et al.&nbsp;(2025) evaluated hierarchical and flat frameworks of the German adaptation of the COICOP classification system scored using Kiritchenko and colleagues’ hierarchical F1 (see <a href="#tbl-coicop" class="quarto-xref">Table&nbsp;1</a>).<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> “In summary, the differences between the flat classifier and the hierarchical classifiers are small” (p.&nbsp;75, google translate). We agree with the authors’ assessment of their indicies, finding it notable that the flat classifier performed on par with the others based on a metric, the hF1, designed exactly to capture the assumed benefit of hierarchical frameworks.</p>
-<div id="tbl-coicop" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coicop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: 10-level COICOP
-</figcaption>
-<div aria-describedby="tbl-coicop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 13%">
-<col style="width: 27%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Evaluation metric &nbsp;framework</th>
-<th style="text-align: right;">Flat classifier</th>
-<th style="text-align: right;">LCN (local classifier per node)</th>
-<th style="text-align: right;">LCPN (local classifier per parent node)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">makro F1 (10-digit)</td>
-<td style="text-align: right;">0.861</td>
-<td style="text-align: right;">0.864</td>
-<td style="text-align: right;">0.860</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">hF1 (10-digit)</td>
-<td style="text-align: right;">0.951</td>
-<td style="text-align: right;">0.950</td>
-<td style="text-align: right;">0.946</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Recall (10-digit)</td>
-<td style="text-align: right;">0.880</td>
-<td style="text-align: right;">0.881</td>
-<td style="text-align: right;">0.876</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Precision (10-digit)</td>
-<td style="text-align: right;">0.868</td>
-<td style="text-align: right;">0.872</td>
-<td style="text-align: right;">0.872</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">makro F1 (2-digit)</td>
-<td style="text-align: right;">0.938</td>
-<td style="text-align: right;">0.942</td>
-<td style="text-align: right;">0.937</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">makro F1 (3-digit)</td>
-<td style="text-align: right;">0.944</td>
-<td style="text-align: right;">0.947</td>
-<td style="text-align: right;">0.942</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">makro F1 (4-digit)</td>
-<td style="text-align: right;">0.944</td>
-<td style="text-align: right;">0.947</td>
-<td style="text-align: right;">0.940</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">makro F1 (5-digit)</td>
-<td style="text-align: right;">0.893</td>
-<td style="text-align: right;">0.902</td>
-<td style="text-align: right;">0.895</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">makro F1 (7-digit)</td>
-<td style="text-align: right;">0.869</td>
-<td style="text-align: right;">0.874</td>
-<td style="text-align: right;">0.869</td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
-</div>
-<p><em>Note: adopted and translated from Table 2 in the Destatis publication by Nietzer et al.</em></p>
-</section>
-<section id="ppp-coicop-at-dst" class="level5">
-<h5 class="anchored" data-anchor-id="ppp-coicop-at-dst"><em>PPP (COICOP) at DST</em></h5>
-<p>Eurostat’s Purchasing Power Parities (PPP) nomenclature extend COICOP and has been adapted to the Danish context providing 7 hierarchical levels. The nomenclature currently contains ~250 basic headings which may be surveyed, each describing multiple classes at the lowest, seventh level (aka the leaf nodes). For instance; the heading “Food, Drinks, and Tobacco” contains ~500 possible classes; “Personal appearance” ~400 possible classes; and “House and garden” ~50 possible classes (at the leaf).</p>
-<p>Hierarchical frameworks of different types were initially developed to classify products in sales data provided by major retailers according to PPP-classes: A global and a LCPN (i.e.&nbsp;local classifier per parent node) framework.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> Initially a LCPN was written as a single model (cross entropy loss with log softmax) that, however, took long time to train and apparently crashed, so it was succeeded first by the global version (described below) and then another LCPN composed of 162 classifiers that took even longer time (1 hour per classifier). All were based on DanLP (Danish BERT) for embedding text descriptions of traded products, three numerical features, and employing linear neural network for classification. This was finetuned at the encoding-layer but merely at PPP-level two (of seven in total), representing four observed classes (compare with 438 observed classes at the seventh level). A flat model based on FastText was later employed to establish a baseline (though of course with radically simpler embeddings). The resulting performance did not clearly favor any of the hierarchical frameworks.</p>
-<p>FastText achieved F1 micro just below 0.9 while the global model (which was the one closest to being fully developed) attained an accuracy of 0.7. To be sure, these evaluation metrics differ with respect to the frameworks. And the development of the hierarchical frameworks led to requesting more data to address data imbalance and nomenclature coverage. More data was made available at the time when the flat framework was employed. As such, the scores are not directly comparable, and more work on either the global or LCPNs will be needed to provide that.</p>
-<p>Recall that global frameworks enables training one model that predict not only the leaf nodes but all nodes. The implementation of the global framework simplified this concept such that it predicted the sufficient nodes on a branch toward a leaf rather than all nodes on such branch. In other words, the number of nodes or levels from root to leaf was reduced to the extent branches overlapped. Moreover, the output layer multiplied softmax values (or multinomial logits) from each parent node to the values of the child node, and it returned only the leafs (thus not giving rise to a multilabel model in the sense of providing one label per node or level). This ensured hierarchical consistency, which is not necessarily built into alternative global frameworks and particularly in LCL (which then would require pruning post estimation). As such, predictions and their probabilities were computed conditional on the preceding ones top-down much like the detection system by Redmon and Farhadi (2016).<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> We may represent this as follows:</p>
-<p><span class="math display">\[
-P(n_1, \ldots, n_7)
-=
-\prod_{k=1}^{7}
-P(L_k = n_k \mid L_{k-1} = n_{k-1})
-\]</span> , where <span class="math inline">\(L_k\)</span> represents which node is chosen at level <span class="math inline">\(k\)</span>, <span class="math inline">\(n_k\)</span> is a specific node at level <span class="math inline">\(k\)</span>, and <span class="math inline">\(P(L_1=n_1 \mid L_0) = P(L_1=n_1)\)</span>.</p>
-<p>This means that predicting literally all leaves would involve calculating six conditional probabilities (besides predicting and adding the seven strings). For a given observed product, if, for arguments sake, all nodes below the first known one are predicted with a probability of 0.9, then the final conditional probability will yield <span class="math inline">\(1 \ast .9^{7-1} \approx .5\)</span>.</p>
-<p>As such, with increasing hierarchical depth and breadth, the predicted probability tend to zero, all else being equal. Because global frameworks are designed to enable models to predict all nodes, even intermediate ones; the code for such frameworks must correspond exactly to the observed classes. In statistical production, the observations (here aggregated purchases) to be classified may represent classes that have not been observed before i.e.&nbsp;during training and testing. Deploying such model in statistical production thus requires coding up the entire nomenclature or those domain areas that might be observed; in turn involving not merely all classes but all the parent nodes or substrings of the complete class labels. In other words, calculations for all observed nodes and nodes expected in statistical production must be coded, at least in the current form of the programmatic implementation of the framework.</p>
-</section>
-<section id="nace-at-ssb-nace-at-ine-and-coicop-at-insee" class="level5">
-<h5 class="anchored" data-anchor-id="nace-at-ssb-nace-at-ine-and-coicop-at-insee"><em>NACE at SSB</em>, <em>NACE at INE</em>, and <em>COICOP at Insee</em></h5>
-<p>Additional research on hierarchical classification have been carried out at NSIs focussing on NACE and COICOP.</p>
-<p>One study classified items according to the Norwegian NACE using an LLM with a hierarchical prompting scheme. But the results did not improve compared to a (flat) FastText model.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
-<p>Several attempts have been made to classify data according to the Spanish version of NACE. In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs.&nbsp;recall on the leaf. Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production. In another ongoing study (see <a href="#tbl-nace" class="quarto-xref">Table&nbsp;2</a>) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function. And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).</p>
-<div id="tbl-nace" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: NACE predictions on a test set
-</figcaption>
-<div aria-describedby="tbl-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 34%">
-<col style="width: 12%">
-<col style="width: 26%">
-<col style="width: 12%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Evaluation metric &nbsp;framework</th>
-<th style="text-align: right;">Flat BETO</th>
-<th style="text-align: right;">Hierarchical loss BETO</th>
-<th style="text-align: right;">Flat BERT</th>
-<th style="text-align: right;">Global BERT</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">accuracy</td>
-<td style="text-align: right;">0.646</td>
-<td style="text-align: right;">0.635</td>
-<td style="text-align: right;">-</td>
-<td style="text-align: right;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">weighted F1</td>
-<td style="text-align: right;">0.651</td>
-<td style="text-align: right;">0.646</td>
-<td style="text-align: right;">0.650</td>
-<td style="text-align: right;">0.647</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">hF1</td>
-<td style="text-align: right;">-</td>
-<td style="text-align: right;">-</td>
-<td style="text-align: right;">0.682</td>
-<td style="text-align: right;">0.774</td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
-</div>
-<p><em>Note: The results reported here are preliminary, unpublished, and subject to uncertainty.</em></p>
-<p>Finally, survey items were classified according to the French COICOP using torchTextClassifiers<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> to compute one model per level (LCL). Preliminary results are reportedly positive, indicating that accuracy almost doubled as compared to a single model (i.e.&nbsp;flat). Needless to say, knowing the absolute scoring difference is of considerable interest but has yet to be published.</p>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Like previous research suggests, incorporating the hierarchical structures of a code system into the modelling process can lead to some, although often small, increase in performance.</p>
+<p>This opens up a discussion about the trade-off of performance and resources needed to implement such models. These types of hierarchical models are often larger, or consist of multiple sub-models (like systems of equations). This is likely to require more development time and maintainance of the code for it to stay tuned with the evolving nomenclatures. It also leads to higher runtimes and increased need for computational resources.</p>
+<p>Code implementations for model components—such as the custom hierarchical loss (introduced in <strong>?@sec-hl</strong>) or other hierarchy-aware architectures—are rarely available as open source implementations. When they do exist, they are often not ready to use out of the box and require substantial adaptation. On that note, we recommend researchers to use programming frameworks that render possible monitoring loss and performance on both training and validation/test datasets simultaneously, because that makes it easier to detect potential overfitting than checking these properties only on the holdout out set.</p>
+<p>The objective of predicting the most of a branch (or largest substring of a class label) if not down to the leaf appears to be the core of hierarchical classification. NSIs and researchers alike may want to carefully consider whether that is indeed the case. The hF1 metric proposed by Kirithcenko and colleagues (2006) comes a long way as a criterion for that goal. It accounts for the share of the full class label being correctly predicted. Yet, at what hierarchical level will a prediction be good enough for statistical production, not least given the cost of development and maintainance? For instance, is a model worthwhile if it is able to correctly predict seemingly obvious high-level classes at a high cost? Will manual annotators (in the loop) have to complete the class label string or will they start identifying the correct class from scratch, putting aside a given partial label predicted by the ML-system?</p>
+<p>Virtually all hierarchical frameworks are proposed to leverage taxonomic assumptions to reduce the number of possible classes per prediction, whether per level or per node. An exception to the rule are global multilabel models predicting all nodes independently. And all hierarchical frameworks surely increase the total number of class labels by including nodes between root and leaves, besides increasing the number of observations, <em>n</em> toward the top. But the probabilities of each step-wise prediction are dependent and thus tend to decrease per step; and the more steps, the more the predicted probabilities decrease. To be sure, it is known from LLMs, transformers, and deep neural network that chains of conditional probabilities needn’t be a problem for providing useful predictions given sufficient compute and data. This suggests that chaining predictions is not itself making classification harder or more problematic but rather leads to a new problem which is to get compute and data.</p>
+<p>Increasing hierarchical breadth and depth—in the training data and the expected data in production, given the taxonomic nomenclature of classification systems—appears confounded with data imbalance. This complicates most classifications and in particular performance evaluation using the data holdout method (train/test-split). Frequencies of only one wreck havoc with performance evaluation, the direction of which may not be straightforward to reason out. In other words, a question will be whether the model performance better or worse than the score suggests. To the extent hierarchical frameworks might outcompete flat frameworks on data that is increasingly hierarchically broad and deep, training the models probably also requires more effort to address data imbalance so as to evaluate performance properly.</p>
+<p>A few final thoughts. Features (or independent variables) are observed mostly at the lowest level and so is observably related to that level. Is it fair to assume that those features are also related to a higher-level concept implied in human-made nomenclatures? It is common knowledge that hierarchical taxonomies (in various fields) can break down, and sometimes that is the pattern of greater analytical interest.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If hierarchical models excelled, why is the evidence not any clearer, and why is it not given the same attention by NSIs as, for instance, transformers? We hope readers feel that some hints or partial answers to these questions have been provided here perhaps even to have clarified what can help automate classification of data for official statistics.</p>
 
 
-</section>
-</section>
 </section>
 
 
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>“Hierarchical Classification of Web Content”, http://susandumais.com/sigir00.pdf<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>“Hierarchical Text Categorization Using Neural Networks”, https://link.springer.com/content/pdf/10.1023/A%3A1012782908347.pdf<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>“Kernel-Based Learning of Hierarchical Multilabel Classification Models”, https://www.jmlr.org/papers/volume7/rousu06a/rousu06a.pdf<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>“Learning and Evaluation in the Presence of Class Hierarchies: Application to Text Categorization”, https://www.svkir.com/papers/Kiritchenko-et-al-hierarchical-AI-2006.pdf<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>“Hierarchical multilabel classification based on path evaluation”, https://www.sciencedirect.com/science/article/pii/S0888613X15001073<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>“An Analysis of Hierarchical Text Classification Using Word Embeddings”, https://arxiv.org/pdf/1809.01771<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>“Global Hierarchical Neural Networks using Hierarchical Softmax”, https://arxiv.org/pdf/2308.01210<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>“Hierarchisches Klassifizieren von Scannerdaten: ein Methodenvergleich mit Anwendung in der Verbraucherpreisstatistik”, https://www.econstor.eu/bitstream/10419/313330/1/1919709770.pdf<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>For a brief description of these concepts, see Ramírez-Corona, Sucar, and Morales (2016) “Hierarchical multilabel classification based on path evaluation”, https://www.sciencedirect.com/science/article/pii/S0888613X15001073<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>“YOLO9000: Better, Faster, Stronger”, https://arxiv.org/pdf/1612.08242<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>FastText can be estimated using hierarchical softmax, which enables faster compute, not better or more accurate predictions, in fact, rather the contrary. It computes a tree from the features, not based on the classes. See https://fasttext.cc/docs/en/supervised-tutorial.html#scaling-things-up<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>https://github.com/InseeFrLab/torch-fastText/; https://github.com/InseeFrLab/torchTextClassifiers<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>e.g.&nbsp;pleitropy, polysemy, or patterns in life-events cf.&nbsp;Savcisens et al., 2024, Nature Computational Science, “Using sequences of life-events to predict human lives”, https://www.nature.com/articles/s43588-023-00573-5<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -800,14 +589,11 @@ Table&nbsp;2: NACE predictions on a test set
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/chapter3.html" class="pagination-link" aria-label="Case study - results">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Case study - results</span>
+      <a href="../chapters/chapter4.html" class="pagination-link" aria-label="Compilation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Compilation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/chapter5.html" class="pagination-link" aria-label="Discussion">
-        <span class="nav-page-text">Discussion</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -815,4 +601,4 @@ Table&nbsp;2: NACE predictions on a test set
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/edit/main/chapters/chapter4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/blob/main/chapters/chapter4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/edit/main/chapters/chapter5.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/blob/main/chapters/chapter5.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/AIML4OS/WP10_Cluster3_HierarchicalClassificationModels/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

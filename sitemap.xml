@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter4.html</loc>
-    <lastmod>2026-04-14T08:32:55.012Z</lastmod>
-  </url>
-  <url>
-    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter2.html</loc>
-    <lastmod>2026-04-14T08:32:55.012Z</lastmod>
-  </url>
-  <url>
-    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/index.html</loc>
-    <lastmod>2026-04-14T08:32:55.026Z</lastmod>
-  </url>
-  <url>
-    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter1.html</loc>
-    <lastmod>2026-04-14T08:32:55.011Z</lastmod>
+    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter5.html</loc>
+    <lastmod>2026-05-15T07:04:01.877Z</lastmod>
   </url>
   <url>
     <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter3.html</loc>
-    <lastmod>2026-04-14T08:32:55.012Z</lastmod>
+    <lastmod>2026-05-15T07:04:01.877Z</lastmod>
+  </url>
+  <url>
+    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter1.html</loc>
+    <lastmod>2026-05-15T07:04:01.877Z</lastmod>
+  </url>
+  <url>
+    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/index.html</loc>
+    <lastmod>2026-05-15T07:04:01.893Z</lastmod>
+  </url>
+  <url>
+    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter2.html</loc>
+    <lastmod>2026-05-15T07:04:01.877Z</lastmod>
+  </url>
+  <url>
+    <loc>https://AIML4OS.github.io//WP10_Cluster3_HierarchicalClassificationModels/chapters/chapter4.html</loc>
+    <lastmod>2026-05-15T07:04:01.877Z</lastmod>
   </url>
 </urlset>

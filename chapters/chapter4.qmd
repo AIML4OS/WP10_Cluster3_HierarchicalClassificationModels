@@ -111,7 +111,7 @@ And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented 
 |:------------------------------|----------:|-----------------------:|----------:|------------:|
 | accuracy    | 0.646 | 0.635 | -     | -     |
 | weighted F1 | 0.651 | 0.646 | 0.650 | 0.647 |
-| hF1         | -     | -     | 0.682 | 0.774 |
+| hF1         | -     | -     | 0.758 | 0.774 |
 
 : NACE predictions on a test set {#tbl-nace}
 

@@ -98,13 +98,27 @@ In other words, calculations for all observed nodes and nodes expected in statis
 ##### *NACE at SSB*, *NACE at INE*, and *COICOP at Insee*
 Additional research on hierarchical classification have been carried out at NSIs focussing on NACE and COICOP.
 
-One study classified items according to the Norwegian NACE using an LLM with a hierarchical prompting scheme.
-But the results did not improve compared to a (flat) FastText model.^[FastText can be estimated using hierarchical softmax, which enables faster compute, not better or more accurate predictions, in fact, rather the contrary. It computes a tree from the features, not based on the classes. See https://fasttext.cc/docs/en/supervised-tutorial.html#scaling-things-up]
+A study classified items according to the Norwegian NACE using different approaches (see @tbl-norway-nace).
+One approach was to use different LLMs with flat and hierarchical prompting schemes, respectively.
+The results based on LLMs did not improve compared to a (flat) FastText model.^[FastText can be estimated using hierarchical softmax, which enables faster compute, not better or more accurate predictions, in fact, rather the contrary. It computes a tree from the features, not based on the classes. See https://fasttext.cc/docs/en/supervised-tutorial.html#scaling-things-up]
+
+
+| Framework / Evaluation metric | makro F1 | F1 weighted | hF1 |
+|:------------------------------|---------:|------------:|----:|
+| Qwen-3B Flat          | 0.0185 | 0.0131 | 0.0316 |
+| Qwen-3B Hierarhichal  | 0.0584 | 0.1523 | 0.2408 |
+| Qwen-7B Flat          | 0.0762 | 0.1122 | 0.1367 |
+| Qwen-7B Hierarhichal  | 0.0988 | 0.2395 | 0.3303 |
+| Qwen-14B Flat         | 0.1624 | 0.3618 | 0.4404 |
+| Qwen-14B Hierarhichal | 0.1543 | 0.3085 | 0.4030 |
+| FastText (flat)       | 0.3200 | 0.6000 | 0.6671 |
+
+: NACE predictions {#tbl-norway-nace-2}
 
 Several attempts have been made to classify data according to the Spanish version of NACE.
 In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs. recall on the leaf.
 Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production.
-In another ongoing study (see @tbl-nace) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function.
+In another ongoing study (see @tbl-spain-nace) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function.
 And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).
 
 | Evaluation metric \ framework | Flat BETO | Hierarchical loss BETO | Flat BERT | Global BERT |
@@ -113,7 +127,7 @@ And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented 
 | weighted F1 | 0.651 | 0.646 | 0.650 | 0.647 |
 | hF1         | -     | -     | 0.758 | 0.774 |
 
-: NACE predictions on a test set {#tbl-nace}
+: NACE predictions on a test set {#tbl-spain-nace}
 
 *Note: The results reported here are preliminary, unpublished, and subject to uncertainty.*
 

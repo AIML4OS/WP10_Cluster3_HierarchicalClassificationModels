@@ -320,14 +320,77 @@ P(L_k = n_k \mid L_{k-1} = n_{k-1})
 <section id="nace-at-ssb-nace-at-ine-and-coicop-at-insee" class="level5">
 <h5 class="anchored" data-anchor-id="nace-at-ssb-nace-at-ine-and-coicop-at-insee"><em>NACE at SSB</em>, <em>NACE at INE</em>, and <em>COICOP at Insee</em></h5>
 <p>Additional research on hierarchical classification have been carried out at NSIs focussing on NACE and COICOP.</p>
-<p>One study classified items according to the Norwegian NACE using an LLM with a hierarchical prompting scheme. But the results did not improve compared to a (flat) FastText model.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
-<p>Several attempts have been made to classify data according to the Spanish version of NACE. In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs.&nbsp;recall on the leaf. Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production. In another ongoing study (see <a href="#tbl-nace" class="quarto-xref">Table&nbsp;2</a>) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function. And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).</p>
-<div id="tbl-nace" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>A study classified items according to the Norwegian NACE using different approaches (see <strong>?@tbl-norway-nace</strong>). One approach was to use different LLMs with flat and hierarchical prompting schemes, respectively. The results based on LLMs did not improve compared to a (flat) FastText model.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<div id="tbl-norway-nace-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: NACE predictions on a test set
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-norway-nace-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: NACE predictions
 </figcaption>
-<div aria-describedby="tbl-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="tbl-norway-nace-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Framework / Evaluation metric</th>
+<th style="text-align: right;">makro F1</th>
+<th style="text-align: right;">F1 weighted</th>
+<th style="text-align: right;">hF1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Qwen-3B Flat</td>
+<td style="text-align: right;">0.0185</td>
+<td style="text-align: right;">0.0131</td>
+<td style="text-align: right;">0.0316</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Qwen-3B Hierarhichal</td>
+<td style="text-align: right;">0.0584</td>
+<td style="text-align: right;">0.1523</td>
+<td style="text-align: right;">0.2408</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Qwen-7B Flat</td>
+<td style="text-align: right;">0.0762</td>
+<td style="text-align: right;">0.1122</td>
+<td style="text-align: right;">0.1367</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Qwen-7B Hierarhichal</td>
+<td style="text-align: right;">0.0988</td>
+<td style="text-align: right;">0.2395</td>
+<td style="text-align: right;">0.3303</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Qwen-14B Flat</td>
+<td style="text-align: right;">0.1624</td>
+<td style="text-align: right;">0.3618</td>
+<td style="text-align: right;">0.4404</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Qwen-14B Hierarhichal</td>
+<td style="text-align: right;">0.1543</td>
+<td style="text-align: right;">0.3085</td>
+<td style="text-align: right;">0.4030</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FastText (flat)</td>
+<td style="text-align: right;">0.3200</td>
+<td style="text-align: right;">0.6000</td>
+<td style="text-align: right;">0.6671</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Several attempts have been made to classify data according to the Spanish version of NACE. In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs.&nbsp;recall on the leaf. Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production. In another ongoing study (see <a href="#tbl-spain-nace" class="quarto-xref">Table&nbsp;3</a>) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function. And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).</p>
+<div id="tbl-spain-nace" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-spain-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: NACE predictions on a test set
+</figcaption>
+<div aria-describedby="tbl-spain-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 34%">

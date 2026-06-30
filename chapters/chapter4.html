@@ -227,10 +227,10 @@ Table&nbsp;1: 10-level COICOP
 <div aria-describedby="tbl-coicop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 13%">
-<col style="width: 27%">
-<col style="width: 33%">
+<col style="width: 23%">
+<col style="width: 21%">
+<col style="width: 24%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -320,7 +320,7 @@ P(L_k = n_k \mid L_{k-1} = n_{k-1})
 <section id="nace-at-ssb-nace-at-ine-and-coicop-at-insee" class="level5">
 <h5 class="anchored" data-anchor-id="nace-at-ssb-nace-at-ine-and-coicop-at-insee"><em>NACE at SSB</em>, <em>NACE at INE</em>, and <em>COICOP at Insee</em></h5>
 <p>Additional research on hierarchical classification have been carried out at NSIs focussing on NACE and COICOP.</p>
-<p>A study classified items according to the Norwegian NACE using different approaches (see <strong>?@tbl-norway-nace</strong>). One approach was to use different LLMs with flat and hierarchical prompting schemes, respectively. The results based on LLMs did not improve compared to a (flat) FastText model.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<p>A study classified items according to the Norwegian NACE using different approaches (see <a href="#tbl-norway-nace-2" class="quarto-xref">Table&nbsp;2</a>). One approach was to use different LLMs with flat and hierarchical prompting schemes, respectively. The results based on LLMs did not improve compared to a (flat) FastText model.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 <div id="tbl-norway-nace-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-norway-nace-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -384,7 +384,7 @@ Table&nbsp;2: NACE predictions
 </div>
 </figure>
 </div>
-<p>Several attempts have been made to classify data according to the Spanish version of NACE. In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs.&nbsp;recall on the leaf. Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production. In another ongoing study (see <a href="#tbl-spain-nace" class="quarto-xref">Table&nbsp;3</a>) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function. And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented with BERT-based classifiers one of which was a hierarhical LCL each with cross-entropy loss (like multinomial logits).</p>
+<p>Several attempts have been made to classify data according to the Spanish version of NACE. In one study, FastText (flat) came out as equal to if not better than computing one local FastText model per parent node (LCPN), based on accuracy and precision vs.&nbsp;recall on the leaf. Consequently, the FastText-based LCPN framework was discontinued, and instead one FastText-based model per level (LCL), besides the flat model, has been deployed for statistical production. In another ongoing study (see <a href="#tbl-spain-nace" class="quarto-xref">Table&nbsp;3</a>) researchers compare BETO (Spanish-like BERT) with a hierarchical loss function against a non-hierarchical loss function. And the hierarchical F1 metric (proposed by Kiritchenko et al.) was implemented with BERT-based classifiers one of which was a hierarchical LCL each with cross-entropy loss (like multinomial logits).</p>
 <div id="tbl-spain-nace" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-spain-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -393,11 +393,11 @@ Table&nbsp;3: NACE predictions on a test set
 <div aria-describedby="tbl-spain-nace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 34%">
-<col style="width: 12%">
 <col style="width: 26%">
-<col style="width: 12%">
-<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 19%">
+<col style="width: 18%">
+<col style="width: 18%">
 </colgroup>
 <thead>
 <tr class="header">

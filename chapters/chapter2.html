@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,10 +41,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-84365199647afda7ec578bfe13ef3742.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6eba6ba83b4f5fbebb32bc0a0d298c6a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -261,7 +261,7 @@ Loss=0.7*L_{hier}+0.3*L_{ce}.
 </section>
 <section id="top-k-codes-for-models-with-outputs-per-level" class="level3">
 <h3 class="anchored" data-anchor-id="top-k-codes-for-models-with-outputs-per-level">Top-k Codes for Models with Outputs per Level</h3>
-<p>As mentioned in sections <strong>?@sec-sec-stack</strong> and <strong>?@sec-sec-multi</strong>, having a model that produces codes for each level (level-codes) introduces two problems: 1) the possibility of generating invalid codes, and 2) the challenge of identifying top-k most probable codes. Our proposed solution follows the below steps:</p>
+<p>As mentioned in sections <a href="#sec-stack" class="quarto-xref">Section&nbsp;1.1.1</a> and <a href="#sec-multi" class="quarto-xref">Section&nbsp;1.1.2</a>, having a model that produces codes for each level (level-codes) introduces two problems: 1) the possibility of generating invalid codes, and 2) the challenge of identifying top-k most probable codes. Our proposed solution follows the below steps:</p>
 <ol type="1">
 <li>For each level, identify the codes that have a probability higher than <span class="math inline">\(\frac{1}{\# Codes}\)</span>, i.e.&nbsp;the codes with higher probability than random guessing. For example, in the case of NACE, for the third level (5th digit), there are six possible digits. In that case, we only select the codes with probability <span class="math inline">\(\frac{1}{6}\)</span> or higher.</li>
 <li>For the remaining codes of all levels, we multiply the probabilities for all code combinations and concatenate the respective level-codes to a 5-digit NACE code.</li>

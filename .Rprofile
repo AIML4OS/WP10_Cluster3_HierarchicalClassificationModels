@@ -16,9 +16,18 @@ setHook(
   function(newSession) {
     if (newSession) {
       rstudioapi::navigateToFile(
-        '/home/onyxia/work/WP10_Cluster3_HierarchicalClassificationModels/exercises/exercise1.qmd'
+        '/home/onyxia/work/WP10_Cluster3_HierarchicalClassificationModels/exercises/demo_hierarchical_models.qmd'
       )
     }
   },
   action = 'append'
 )
+
+setHook('rstudio.sessionInit', function(newSession) {
+ if (newSession)
+  {
+    rstudioapi::navigateToFile('/home/onyxia/work/WP10_Cluster3_HierarchicalClassificationModels/exercises/demo_hierarchical_models.qmd')
+  }
+}, action = 'append')
+
+

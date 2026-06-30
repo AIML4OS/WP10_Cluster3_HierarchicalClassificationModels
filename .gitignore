@@ -56,3 +56,5 @@ data/*
 
 
 **/*.quarto_ipynb
+
+exercises/demo_hierarchical_models_files/
